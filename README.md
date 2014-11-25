@@ -10,3 +10,4 @@ Liste des fournisseurs d'identité proposés :
 * __OpenID-Connect-MITREid-Java-Spring-Server__ : fournisseur d'idendité Java/Spring utilisant la librairie MITREid Connect et basé sur l'exemple fourni à l'adresse https://github.com/mitreid-connect/OpenID-Connect-Java-Spring-Server par MITREid
 Pour l'utiliser, mettez à jour le paramètre "issuerURL dans le fichier "OpenID-Connect-Java-Spring-Server ▸ openid-connect-server-webapp ▸ src ▸ main ▸ webapp ▸ WEB-INF" et générez le WAR du module openid-connect-server-webapp
 
+* __OpenID-Connect-NodeJS__ :
