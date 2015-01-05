@@ -102,12 +102,16 @@ app.get('/user/create', function(req, res, next) {
             label: 'Given Name',
             type: 'text'
         },
-        middle_name: {
-            label: 'Middle Name',
-            type: 'text'
-        },
         family_name: {
             label: 'Family Name',
+            type: 'text'
+        },
+        birthdate: {
+            label: 'Birthdate (YYYY-MM-DD)',
+            type: 'text'
+        },
+        gender: {
+            label: 'Gender (male/female)',
             type: 'text'
         },
         email: {
