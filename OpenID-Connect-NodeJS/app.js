@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressSession({cookie: {path: '/', httpOnly: true, secure: false, maxAge: 5000}, store: new rs({host: configManager.getMongoHost(), db: configManager.getMongoDb(), port: configManager.getMongoPort(), auto_reconnect: true}), secret: 'Some Secret!!!'}));
+app.use(expressSession(store: new rs({host: configManager.getMongoHost(), db: configManager.getMongoDb(), port: configManager.getMongoPort(), auto_reconnect: true}), secret: 'Some Secret!!!'}));
 
 
 var options = {
