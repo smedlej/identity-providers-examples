@@ -21,9 +21,9 @@ INSERT INTO authorities_TEMP (username, authority) VALUES
   ('user','ROLE_USER');
     
 -- By default, the username column here has to match the username column in the users table, above
-INSERT INTO user_info_TEMP (sub, preferred_username, name, email, email_verified) VALUES
-  ('90342.ASDFJWFA','admin','Demo Admin','admin@example.com', true),
-  ('01921.FLANRJQW','user','Demo User','user@example.com', true);
+INSERT INTO user_info_TEMP (sub, preferred_username, name, given_name, family_name, gender, birthdate, email, email_verified) VALUES
+  ('90342.ASDFJWFA','admin','Demo Admin', 'Demo', 'Admin', 'male', '1984-02-02', 'admin@example.com', true),
+  ('01921.FLANRJQW','user','Demo User', 'Demo', 'User', 'female', '1978-01-01', 'user@example.com', true);
 
  
 --
