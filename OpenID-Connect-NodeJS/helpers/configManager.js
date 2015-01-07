@@ -14,6 +14,6 @@ Configuration.prototype.getMongoHost = function(){
 
 Configuration.prototype.getMongoDb = function(){
     return this._rawConfig.mongo.db;
-}
+};
 
 module.exports = Configuration;
