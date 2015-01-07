@@ -19,11 +19,23 @@ UserLookup.prototype.buildAndSendUserInfo = function(req, res, decryptedIdTokenO
     //code needed to build the user information to send back when the userInfo endpoint is called
     req.model.user.findOne({id: decryptedIdTokenObject.sub}, function (err, user) {
         if (req.check.scopes.indexOf('profile') != -1) {
-            user.sub = user.id;
-            delete user.id;
-            delete user.password;
-            delete user.openidProvider;
-            res.json(user);
+            var pivotIdentityMembers = {
+                'given_name': true,
+                'family_name': true,
+                'birthdate': true,
+                'gender': true,
+                'birthplace': true,
+                'birthdepartment': true,
+                'birthcountry': true
+            };
+            var pivotIdentity = {};
+            pivotIdentity.sub = user.id;
+            for (var member in pivotIdentityMembers) {
+                if (pivotIdentityMembers.hasOwnProperty(member) && user.hasOwnProperty(member)) {
+                    pivotIdentity[member] = user[member];
+                }
+            }
+            res.json(pivotIdentity);
         } else {
             res.json({email: user.email});
         }
