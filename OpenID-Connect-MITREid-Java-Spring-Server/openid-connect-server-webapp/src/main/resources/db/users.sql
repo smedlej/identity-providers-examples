@@ -43,10 +43,10 @@ MERGE INTO authorities
     INSERT (username,authority) values (vals.username, vals.authority);
 
 MERGE INTO user_info 
-  USING (SELECT sub, preferred_username, name, email, email_verified FROM user_info_TEMP) AS vals(sub, preferred_username, name, email, email_verified)
+  USING (SELECT sub, preferred_username, name, given_name, family_name, gender, birthdate, email, email_verified FROM user_info_TEMP) AS vals(sub, preferred_username, name, given_name, family_name, gender, birthdate, email, email_verified)
   ON vals.preferred_username = user_info.preferred_username
   WHEN NOT MATCHED THEN 
-    INSERT (sub, preferred_username, name, email, email_verified) VALUES (vals.sub, vals.preferred_username, vals.name, vals.email, vals.email_verified);
+    INSERT (sub, preferred_username, name, given_name, family_name, gender, birthdate, email, email_verified) VALUES (vals.sub, vals.preferred_username, vals.name, vals.given_name, vals.family_name, vals.gender, vals.birthdate, vals.email, vals.email_verified);
 
     
 -- 

@@ -13,6 +13,18 @@ START TRANSACTION;
 INSERT INTO client_details_TEMP (client_id, client_secret, client_name, dynamically_registered, refresh_token_validity_seconds, access_token_validity_seconds, id_token_validity_seconds, allow_introspection) VALUES
 	('client', 'secret', 'Test Client', false, null, 3600, 600, true);
 
+
+INSERT INTO CLIENT_DETAILS VALUES(3,NULL,TRUE,FALSE,FALSE,600,'fcp-dev','AJGV1xzpzb2DLEnAs4solrm6oc4uD4C5fDzrznj-LQUYRXsdHlGpbwz56gq0yUj6wctD3aHNIdUDvenU7C64fYc',3600,NULL,NULL,'fc','SECRET_BASIC','PUBLIC',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,60000,TRUE,'2015-01-08 15:40:32.083000',NULL,NULL)
+INSERT INTO CLIENT_CONTACT VALUES(3,'admin@example.com')
+INSERT INTO CLIENT_GRANT_TYPE VALUES(3,'authorization_code')
+INSERT INTO CLIENT_REDIRECT_URI VALUES(3,'http://fcp.dev.dev-franceconnect.fr/oidc_callback')
+INSERT INTO CLIENT_RESPONSE_TYPE VALUES(3,'code')
+INSERT INTO CLIENT_SCOPE VALUES(3,'address')
+INSERT INTO CLIENT_SCOPE VALUES(3,'phone')
+INSERT INTO CLIENT_SCOPE VALUES(3,'openid')
+INSERT INTO CLIENT_SCOPE VALUES(3,'email')
+INSERT INTO CLIENT_SCOPE VALUES(3,'profile')
+
 INSERT INTO client_scope_TEMP (owner_id, scope) VALUES
 	('client', 'openid'),
 	('client', 'profile'),
