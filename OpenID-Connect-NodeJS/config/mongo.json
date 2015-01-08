@@ -1,9 +1,9 @@
 {
-  "env":"development",
   "mongo": {
     "hosts": ["localhost"],
+
     "port": 27017,
-    "db": "fi",
+    "db": "fc",
     "options": {
       "server": {
         "poolsize": 3
@@ -14,5 +14,5 @@
       "user": "",
       "pass": ""
     }
-   }
+  }
 }

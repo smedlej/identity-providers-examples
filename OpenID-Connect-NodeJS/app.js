@@ -1,10 +1,10 @@
 var crypto = require('crypto'),
     express = require('express'),
-    expressSession = require('express-session'),
+    session = require('express-session'),
     http = require('http'),
     path = require('path'),
     querystring = require('querystring'),
-    rs = require('connect-mongo')(expressSession),
+    rs = require('connect-mongo')(session),
     extend = require('extend'),
     test = {
         status: 'new'
@@ -18,14 +18,29 @@ var crypto = require('crypto'),
     userLookup = new (require('./helpers/userLookup.js'))();
 
 var app = express();
-var session = require('express-session');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressSession({store: new rs({host: configManager.getMongoHost(), db: configManager.getMongoDb(), port: configManager.getMongoPort(), auto_reconnect: true}), secret: 'Some Secret!!!'}));
+//app.use(session({
+//    cookie: {path: '/', httpOnly: true, secure: false, maxAge: 5000},
+//    store: new rs({
+//        host: configManager.getMongoHost(),
+//        db: configManager.getMongoDb(),
+//        port: configManager.getMongoPort(),
+//        auto_reconnect: true
+//    }),
+//    secret: 'Some Secret!!!'
+//}));
 
+var mongoose = require('mongoose');
+mongoose.connect(configManager.getReplicationHosts(), configManager.getOptions());
+app.use(session({
+    cookie: {path: '/', httpOnly: true, secure: false, maxAge: 5000},
+    store: new rs({ mongoose_connection: mongoose.connection }),
+    secret: 'Some Secret!!!'
+}));
 
 var options = {
     login_url: '/my/login',
