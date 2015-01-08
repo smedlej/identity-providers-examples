@@ -1,7 +1,6 @@
 var EventEmitter = require('events').EventEmitter,
     querystring = require('querystring'),
     modelling = require('modelling'),
-    sailsMongo = require('sails-mongo'),
     crypto = require('crypto'),
     _ = require('lodash'),
     extend = require('extend'),
@@ -42,7 +41,7 @@ var defaults = {
     connections: {
         def: {
             adapter: 'mongo',
-            url: 'mongodb://' + configManager.getMongoHost() + ':' + configManager.getMongoPort() + '/' + configManager.getMongoDb(),
+            url: configManager.getReplicationHosts(),
             auto_reconnect: true
         }
     },
