@@ -1,75 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta name="viewport" content="width=device-width">
     <title>Fournisseur d'identité</title>
-    <link href="/files/IR2014style.css" rel="stylesheet" type="text/css">
-    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <div class="conteneur text-center">
-    <img src="/images/bg_logo.png" width="390px" class="hidden-xs hidden-sm hidden-md"/>
-
+    <img src="/images/bg_logo.png" width="360" class="hidden-xs hidden-sm hidden-md"/>
     <div class="hidden-lg">
-        <img src="/images/bg_logo.png" width="320px"/>
+        <img src="/images/bg_logo.png" width="360"/>
     </div>
-
     <div>
-        <div id="logoMSP" class="invisible">
-            <div style="display:inline-block"><img src="/files/logo_msp_Part_125.gif"></div>
-        </div>
         <div class="rounded">
 
-            <h2>J'accède avec mon mot de passe</h2>
+            <h2 class="text-left">J'accède avec mon mot de passe</h2>
 
-            <div id="connexion_en_cours" class="invisible">
-                <h3>Connexion </h3>
-
-                <div class="connexion"></div>
-                <h3 class="connexionTxt">Connexion en cours, veuillez patienter...</h3>
-                <br>
-            </div>
-            <div id="acces_loginMDP" class="mire">
-                <div class="texte">
-                    <div id="LMDP_saisie_obligatoire">
-                        <span id="LMDP_saisie_obligatoire_error" class="attentionTxtRouge  invisible">La saisie de toutes les zones est obligatoire. Veuillez saisir <span
-                                    id="LMDP_saisie_obligatoire_comptage">le(s) champ(s) signalé(s)</span> par <img
-                                    src="/files/pic_alerte.gif">.</span>
-                    </div>
-                </div>
-            </div>
             <div class="formulaire">
                 <form method="POST">
-                    <input type="hidden" id="LMDP_Spi" name="LMDP_Spi">
-                    <input type="hidden" id="LMDP_Password" name="LMDP_Password">
-
                     <div>
-                        <div class="champs">
-                            <img id="LMDP_Spi_img_error" class="invisible" src="/files/pic_alerte.gif">
-                            Numéro fiscal :
-                            <input class="text" tabindex="1" name="email" id="LMDP_Spi_tmp" name="LMDP_Spi_tmp"
+                        <div class="champs">Numéro fiscal :
+                            <input class="text" tabindex="1" name="email" id="LMDP_Spi_tmp"
                                    placeholder="Votre numéro fiscal"/>
                         </div>
                     </div>
                     <div style="clear:both;"></div>
-
-                    <div id="LMDP_Password_error" class="attentionTxtRouge invisible">Le format de votre mot de passe
-                        est incorrect. Votre mot de passe doit être composé d'au moins 8 caractères avec au moins une
-                        lettre et un chiffre. Il peut contenir des lettres (minuscules ou majuscules), des chiffres et
-                        les caractères spéciaux suivants: !#$%&amp;*+-/=?^_'.{|} .
-                    </div>
                     <br/>
 
                     <div>
-                        <div class="champs"><img id="LMDP_Password_img_error" class="invisible"
-                                                 src="/files/pic_alerte.gif">
-                            Mot de passe :
+                        <div class="champs">Mot de passe :
                             <input type="password" name="password" tabindex="2" id="LMDP_Password_tmp"
                                    placeholder="Votre mot de passe"/>
                         </div>
@@ -80,12 +45,10 @@
                     <br>
                 </form>
             </div>
-            <div style="clear:both;"></div>
         </div>
-
     </div>
     <div id="footer">
-        <div class="signature">France Connect - Application de démonstration
+        <div class="signature text-right">France Connect - ceci est une application de démonstration
         </div>
     </div>
 </div>
