@@ -6,30 +6,29 @@
     <meta name="viewport" content="width=device-width">
     <title>Fournisseur d'identité</title>
     <link href="/files/IR2014style.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/files/IR2014functions.js"></script>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/files/IR2014functions.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
-<div id="page">
-    <div id="header">
-        <div >
-            <h1>Mon espace <b>Particulier</b></h1>
-        </div>
-        <div style="clear:both"></div>
+<div class="conteneur text-center">
+    <img src="/images/bg_logo.png" width="390px" class="hidden-xs hidden-sm hidden-md"/>
+
+    <div class="hidden-lg">
+        <img src="/images/bg_logo.png" width="320px"/>
     </div>
 
-    <div id="conteneur">
-        <div class="intro">
-            <b>Bienvenue.</b>
-        </div>
+    <div>
         <div id="logoMSP" class="invisible">
             <div style="display:inline-block"><img src="/files/logo_msp_Part_125.gif"></div>
         </div>
-
-
         <div class="rounded">
 
-            <h2>J'accède avec <span> mon mot de passe </span></h2>
+            <h2>J'accède avec mon mot de passe</h2>
 
             <div id="connexion_en_cours" class="invisible">
                 <h3>Connexion </h3>
@@ -48,16 +47,11 @@
                 </div>
             </div>
             <div class="formulaire">
-                <div id="cookie_error" class="attentionTxtRouge invisible">Votre navigateur n'accepte pas les
-                    cookies.<br>Pour accéder à votre espace Particulier, il vous faut au préalable les accepter.
-                    
-                </div>
-
                 <form method="POST">
                     <input type="hidden" id="LMDP_Spi" name="LMDP_Spi">
                     <input type="hidden" id="LMDP_Password" name="LMDP_Password">
 
-                    <div class="gauche">
+                    <div>
                         <div class="champs">
                             <img id="LMDP_Spi_img_error" class="invisible" src="/files/pic_alerte.gif">
                             Numéro fiscal :
@@ -72,8 +66,9 @@
                         lettre et un chiffre. Il peut contenir des lettres (minuscules ou majuscules), des chiffres et
                         les caractères spéciaux suivants: !#$%&amp;*+-/=?^_'.{|} .
                     </div>
+                    <br/>
 
-                    <div class="gauche">
+                    <div>
                         <div class="champs"><img id="LMDP_Password_img_error" class="invisible"
                                                  src="/files/pic_alerte.gif">
                             Mot de passe :
@@ -81,8 +76,9 @@
                                    placeholder="Votre mot de passe"/>
                         </div>
                     </div>
-                    <input class="bouton" type="submit" tabindex="3" value="Valider" id="valider"
-                           onclick="document.getElementById(&#39;LMDP_formulaire&#39;).action = urlLoginMotDePasse ; return envoiLP();">
+                    <br/>
+                    <input type="submit" class="btn btn-default dropdown-toggle" tabindex="3" value="Valider"
+                           id="valider">
                     <br>
                 </form>
             </div>
