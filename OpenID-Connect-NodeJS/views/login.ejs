@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Fournisseur d'identité</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion à FranceConnect via un fournisseur d'identité</title>
 
     <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -11,35 +11,28 @@
     <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
-<div class="conteneur text-center">
-    <img src="/images/bg_logo.png" width="360" class="hidden-xs hidden-sm hidden-md"/>
-    <div class="hidden-lg">
-        <img src="/images/bg_logo.png" width="360"/>
+<body width="device-width">
+<div class="conteneur text-center" style="margin: auto; max-width: 763px">
+    <div>
+        <img src="/images/bg_logo.png" style="max-width: 100%;"/>
     </div>
     <div>
         <div class="rounded">
 
             <h2 class="text-left">J'accède avec mon mot de passe</h2>
 
-            <div class="formulaire">
+            <div class="formulaire text-left">
                 <form method="POST">
-                    <div>
-                        <div class="champs">Numéro fiscal :
-                            <input class="text" tabindex="1" name="email" id="LMDP_Spi_tmp"
-                                   placeholder="Votre numéro fiscal"/>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Numéro fiscal :</label>
+                        <input class="form-control" tabindex="1" name="email" id="LMDP_Spi_tmp"
+                               placeholder="Votre numéro fiscal"/>
                     </div>
-                    <div style="clear:both;"></div>
-                    <br/>
-
-                    <div>
-                        <div class="champs">Mot de passe :
-                            <input type="password" name="password" tabindex="2" id="LMDP_Password_tmp"
-                                   placeholder="Votre mot de passe"/>
-                        </div>
+                    <div class="form-group">
+                        <label for="lmdp_password_tmp">Mot de passe :</label>
+                        <input class="form-control" type="password" name="password" tabindex="2" id="LMDP_Password_tmp"
+                               placeholder="Votre mot de passe"/>
                     </div>
-                    <br/>
                     <input type="submit" class="btn btn-default dropdown-toggle" tabindex="3" value="Valider"
                            id="valider">
                     <br>
