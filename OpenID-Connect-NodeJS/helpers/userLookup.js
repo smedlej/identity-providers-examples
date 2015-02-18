@@ -4,11 +4,11 @@ var UserLookup = function(){};
 UserLookup.prototype.validate = function(req, next){
 
     // code to query user data should go there
-    req.model.user.findOne({email: req.body.email}, function(err, user) {
+    req.model.user.findOne({identifier: req.body.identifier}, function(err, user) {
         if(!err && user && user.samePassword(req.body.password)) {
             return next(null, user);
         } else {
-            var error = new Error('Username or password incorrect.');
+            var error = new Error('Identifier or password incorrect.');
             return next(error);
         }
     });
