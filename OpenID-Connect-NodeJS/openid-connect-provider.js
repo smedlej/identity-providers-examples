@@ -405,6 +405,7 @@ OpenIDConnect.prototype.login = function (validateUser) {
  */
 OpenIDConnect.prototype.auth = function () {
     var self = this;
+    //spec = liste des champs obligatoires, si un de ces champs (marqué "true") n'est pas présent dans la requête, le serveur crache une "invalid request field <le champ absent> is mandatory"
     var spec = {
         response_type: true,
         client_id: true,
@@ -992,6 +993,7 @@ OpenIDConnect.prototype.token = function () {
                                         sub: prev.sub || prev.user || null,
                                         aud: prev.client.key,
                                         exp: d + 3600,
+                                        acr:'eidas2',
                                         iat: d
                                     };
                                     req.model.access.create({
