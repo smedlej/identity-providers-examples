@@ -1,15 +1,14 @@
-var UserLookup = function () {
-};
+var UserLookup = function(){};
 
 //this function handles the "login" part where the user actually performs a login procedure, this function should tell if the info the user has provided is accurate
-UserLookup.prototype.validate = function (req, next) {
+UserLookup.prototype.validate = function(req, next){
 
     // code to query user data should go there
-    req.model.user.findOne({email: req.body.email}, function (err, user) {
-        if (!err && user && user.samePassword(req.body.password)) {
+    req.model.user.findOne({email: req.body.email}, function(err, user) {
+        if(!err && user && user.samePassword(req.body.password)) {
             return next(null, user);
         } else {
-            var error = new Error('Username or password incorrect.');
+            var error = new Error('Identifier or password incorrect.');
             return next(error);
         }
     });
