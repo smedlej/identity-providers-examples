@@ -1238,4 +1238,4 @@ exports.oidc = function (options) {
 
 exports.defaults = function () {
     return defaults;
-};
+}
