@@ -49,6 +49,7 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
                 pivotIdentity[member] = user[member];
             }
         }
+        console.log(pivotIdentity)
         res.json(pivotIdentity);
     });
 };
