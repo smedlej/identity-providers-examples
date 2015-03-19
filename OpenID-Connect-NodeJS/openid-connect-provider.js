@@ -180,7 +180,7 @@ var defaults = {
             attributes: {
                 token: {type: 'string', required: true},
                 scope: {type: 'array', required: true},
-                auth: {model: 'auth', required: true},
+                auth: {model: 'auth'},
                 status: {type: 'string', required: true}
             }
         }
