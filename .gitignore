@@ -17,3 +17,5 @@ target/
 # IntelliJ IDEA projects files
 *.iml
 .idea
+
+OpenID-Connect-MITREid-Java-Spring-Server/.idea
