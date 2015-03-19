@@ -27,7 +27,8 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             'gender': true,
             'birthplace': true,
             'birthdepartment': true,
-            'birthcountry': true
+            'birthcountry': true,
+            'preferred_username' : true
         };
         if (req.check.scopes.indexOf('email') !== -1) {
 
@@ -39,9 +40,6 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
         if (req.check.scopes.indexOf('phone') !== -1) {
             pivotIdentityMembers.phone = true;
         }
-        if (req.check.scopes.indexOf('preferred_username') !== -1) {
-            pivotIdentityMembers.preferred_username = true;
-        }
         var pivotIdentity = {};
         pivotIdentity.sub = user.id;
         for (var member in pivotIdentityMembers) {
@@ -49,7 +47,7 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
                 pivotIdentity[member] = user[member];
             }
         }
-        console.log(pivotIdentity)
+        console.log(pivotIdentity);
         res.json(pivotIdentity);
     });
 };
