@@ -38,7 +38,7 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             pivotIdentityMembers.address = true;
         }
         if (req.check.scopes.indexOf('phone') !== -1) {
-            pivotIdentityMembers.phone = true;
+            pivotIdentityMembers.phone_number = true;
         }
         var pivotIdentity = {};
         pivotIdentity.sub = user.id;
