@@ -1152,9 +1152,7 @@ OpenIDConnect.prototype.userInfo = function () {
         self.check('openid', /profile|email/),
         self.use({policies: {loggedIn: false}, models: ['user', 'access']}),
         function (req, res, next) {
-            var accessToken = req.headers['authorization'].split(' ')[1];
-
-            req.model.access.findOne({token: accessToken})
+            req.model.access.findOne({token: querystring.parse(req.url.split('?')[1])['access_token']})
                 .exec(function (err, access) {
                     var idToken = access.idToken.split('.')[1];
                     var decryptedIdTokenBinary = new Buffer(idToken, 'base64');
