@@ -993,7 +993,7 @@ OpenIDConnect.prototype.token = function () {
                                         sub: prev.sub || prev.user || null,
                                         aud: prev.client.key,
                                         exp: d + 3600,
-                                        acr:'eidas2',
+                                        acr: 'eidas2',
                                         iat: d
                                     };
                                     req.model.access.create({
@@ -1020,8 +1020,12 @@ OpenIDConnect.prototype.token = function () {
                                                             .populate('accessTokens')
                                                             .populate('refreshTokens')
                                                             .exec(function (err, auth) {
-                                                                if (!auth.access.length && !auth.refresh.length) {
-                                                                    auth.destroy();
+                                                                if (auth.access === undefined || auth.refresh === undefined) {
+                                                                    console.error('access or refresh undefined, not previous case')
+                                                                } else {
+                                                                    if (!auth.access.length && !auth.refresh.length) {
+                                                                        auth.destroy();
+                                                                    }
                                                                 }
                                                             });
                                                     }
