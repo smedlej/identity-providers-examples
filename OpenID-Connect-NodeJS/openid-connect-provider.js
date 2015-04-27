@@ -989,7 +989,7 @@ OpenIDConnect.prototype.token = function () {
 
                                     var d = Math.round(new Date().getTime() / 1000);
                                     var id_token = {
-                                        iss: req.protocol + '://' + req.headers.host,
+                                        iss: configManager.getIssuerURL(),
                                         sub: prev.sub || prev.user || null,
                                         aud: prev.client.key,
                                         exp: d + 3600,

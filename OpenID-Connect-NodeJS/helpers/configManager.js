@@ -32,4 +32,8 @@ Configuration.prototype.getReplicationHosts = function(){
     return hosts;
 };
 
+Configuration.prototype.getIssuerURL = function(){
+    return this._rawConfig.issuerURL;
+};
+
 module.exports = Configuration;
