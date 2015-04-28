@@ -144,6 +144,7 @@ var defaults = {
                 scope: {type: 'array', required: true},
                 user: {model: 'user', required: true},
                 sub: {type: 'string', required: true},
+                nonce: {type: 'string', required: true},
                 code: {type: 'string', required: true},
                 redirectUri: {type: 'url', required: true},
                 responseType: {type: 'string', required: true},
@@ -561,7 +562,8 @@ OpenIDConnect.prototype.auth = function () {
                                         code: token,
                                         redirectUri: params.redirect_uri,
                                         responseType: params.response_type,
-                                        status: 'created'
+                                        status: 'created',
+                                        nonce: params.nonce
                                     }).exec(function (err, auth) {
                                         if (!err && auth) {
                                             setTimeout(function () {
@@ -994,7 +996,8 @@ OpenIDConnect.prototype.token = function () {
                                         aud: prev.client.key,
                                         exp: d + 3600,
                                         acr: 'eidas2',
-                                        iat: d
+                                        iat: d,
+                                        nonce: prev.auth.nonce
                                     };
                                     req.model.access.create({
                                             token: access,
