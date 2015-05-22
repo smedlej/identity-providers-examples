@@ -904,9 +904,9 @@
       }
     },
     "mongoose": {
-      "version": "3.9.7",
-      "from": "mongoose@^3.8.21",
-      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-3.9.7.tgz",
+      "version": "3.8.18",
+      "from": "mongoose@3.8.18",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-3.8.18.tgz",
       "dependencies": {
         "hooks": {
           "version": "0.3.2",
