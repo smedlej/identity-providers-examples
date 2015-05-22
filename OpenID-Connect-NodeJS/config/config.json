@@ -1,6 +1,7 @@
 {
   "env":"development",
   "issuerURL":"http://impots-franceconnect.fr/",
+  "identityProvider":"impots",
   "mongo": {
     "hosts": ["localhost"],
     "port": 27017,

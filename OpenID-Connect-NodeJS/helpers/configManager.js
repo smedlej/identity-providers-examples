@@ -36,4 +36,8 @@ Configuration.prototype.getIssuerURL = function(){
     return this._rawConfig.issuerURL;
 };
 
+Configuration.prototype.getIdentityProvider = function(){
+    return this._rawConfig.identityProvider;
+};
+
 module.exports = Configuration;
