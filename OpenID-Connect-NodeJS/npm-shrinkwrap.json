@@ -904,9 +904,9 @@
       }
     },
     "mongoose": {
-      "version": "3.8.18",
-      "from": "mongoose@3.8.18",
-      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-3.8.18.tgz",
+      "version": "3.8.34",
+      "from": "mongoose@3.8.34",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-3.8.34.tgz",
       "dependencies": {
         "hooks": {
           "version": "0.3.2",
@@ -914,9 +914,9 @@
           "resolved": "https://registry.npmjs.org/hooks/-/hooks-0.3.2.tgz"
         },
         "mongodb": {
-          "version": "1.4.12",
-          "from": "mongodb@1.4.12",
-          "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-1.4.12.tgz",
+          "version": "1.4.38",
+          "from": "mongodb@1.4.38",
+          "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-1.4.38.tgz",
           "dependencies": {
             "bson": {
               "version": "0.2.21",
