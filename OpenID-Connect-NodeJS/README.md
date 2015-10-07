@@ -45,7 +45,7 @@ Les comptes utilisateurs sont stockés dans la collection "user", au format suiv
     "birthcountry" : "33",
     "createdAt" : ISODate("2014-10-29T18:58:48.638Z"),
     "updatedAt" : ISODate("2014-10-29T18:58:48.638Z"),
-    "identifier" : "demo@franceconnect.fr",
+    "identifier" : "<identifiant technique utilisé pour se connecter. NIR, numéro fiscal ...>",
     "email" : "test@test.com",
     "address" : "26 rue Desaix, 75015 Paris",
     "phone" : "0123456789",
