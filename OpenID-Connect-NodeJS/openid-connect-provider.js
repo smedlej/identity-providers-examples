@@ -755,6 +755,7 @@ OpenIDConnect.prototype.token = function () {
 
         function (req, res, next) {
             var params = req.parsedParams;
+            console.log('params received for token endpoint : ', params);
 
             var client_key = req.body.client_id;
             var client_secret = req.body.client_secret;
@@ -793,6 +794,7 @@ OpenIDConnect.prototype.token = function () {
                         switch (params.grant_type) {
                             //Client is trying to exchange an authorization code for an access token
                             case "authorization_code":
+                                console.log('authorization code received : ', params.code);
                                 //Step 3: check if code is valid and not used previously
                                 req.model.auth.findOne({code: params.code})
                                     .populate('accessTokens')
