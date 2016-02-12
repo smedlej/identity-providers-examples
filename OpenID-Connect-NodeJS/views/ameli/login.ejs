@@ -45,6 +45,12 @@
                             <button type="submit" class="btn btn-default" value="Valider"
                                     name="submit">Valider
                             </button>
+                            <% if(error) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <span class="sr-only">Error:</span>
+                                <%= error %>
+                            </div>
+                            <% } %>
                         </form>
                     </div>
                 </div>

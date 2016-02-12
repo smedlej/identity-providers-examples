@@ -1,3 +1,5 @@
+'use strict';
+
 var UserLookup = function () {
 };
 
@@ -10,7 +12,7 @@ UserLookup.prototype.validate = function (req, next) {
         if (!err && user && user.samePassword(req.body.password)) {
             return next(null, user);
         } else {
-            var error = new Error('Identifier or password incorrect.');
+            var error = new Error('Identifiant ou mot de passe incorrect.');
             return next(error);
         }
     });
@@ -28,7 +30,7 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             'birthplace': true,
             'birthdepartment': true,
             'birthcountry': true,
-            'preferred_username' : true
+            'preferred_username': true
         };
         if (req.check.scopes.indexOf('email') !== -1) {
 

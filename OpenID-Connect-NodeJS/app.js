@@ -65,9 +65,9 @@ app.get('/', function (req, res) {
 
 app.get('/my/login', function (req, res, next) {
     if (configManager.getIdentityProvider() === "ameli") {
-        res.render('ameli/login');
+        res.render('ameli/login', {error: req.session.error});
     } else {
-        res.render('impots/login');
+        res.render('impots/login', {error: req.session.error});
     }
 });
 
@@ -76,8 +76,12 @@ var validateUser = function (req, next) {
     userLookup.validate(req, next);
 };
 
-var afterLogin = function (req, res, next) {
-    res.redirect(req.param('return_url') || '/user');
+var afterLogin = function (err, req, res, next) {
+    if (err) {
+        next(err)
+    } else {
+        res.redirect(req.param('return_url') || '/user');
+    }
 };
 
 var loginError = function (err, req, res, next) {
