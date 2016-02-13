@@ -386,7 +386,7 @@ OpenIDConnect.prototype.login = function (validateUser) {
                     } else {
                         delete req.session.sub;
                     }
-                    return next();
+                    return next(null);
                 } else {
                     return next(error);
                 }
