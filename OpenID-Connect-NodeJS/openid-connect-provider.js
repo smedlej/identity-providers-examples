@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var EventEmitter = require('events').EventEmitter,
     querystring = require('querystring'),
     modelling = require('modelling'),
@@ -368,29 +371,28 @@ OpenIDConnect.prototype.login = function (validateUser) {
     return [self.use({policies: {loggedIn: false}, models: 'user'}),
         function (req, res, next) {
             validateUser(req, /*next:*/function (error, user) {
-                if (!error && !user) {
-                    error = new Error('User not validated');
-                }
-                if (!error) {
-                    if (user.id) {
-                        req.session.user = user.id;
-                    } else {
-                        delete req.session.user;
+                    if (!error && !user) {
+                        error = new Error('User not validated');
                     }
-                    if (user.sub) {
-                        if (typeof user.sub === 'function') {
-                            req.session.sub = user.sub();
+                    if (!error) {
+                        if (user.id) {
+                            req.session.user = user.id;
                         } else {
-                            req.session.sub = user.sub;
+                            delete req.session.user;
                         }
-                    } else {
-                        delete req.session.sub;
+                        if (user.sub) {
+                            if (typeof user.sub === 'function') {
+                                req.session.sub = user.sub();
+                            } else {
+                                req.session.sub = user.sub;
+                            }
+                        } else {
+                            delete req.session.sub;
+                        }
                     }
-                    return next();
-                } else {
                     return next(error);
                 }
-            });
+            );
         }];
 };
 
@@ -529,133 +531,133 @@ OpenIDConnect.prototype.auth = function () {
 
                 return deferred.promise;
             }).then(function (params) {
-                //Step 5: create responses
-                if (params.response_type == 'none') {
-                    return {params: params, resp: {}};
-                } else {
-                    var deferred = Q.defer();
-                    var promises = [];
+                    //Step 5: create responses
+                    if (params.response_type == 'none') {
+                        return {params: params, resp: {}};
+                    } else {
+                        var deferred = Q.defer();
+                        var promises = [];
 
-                    var rts = params.response_type.split(' ');
+                        var rts = params.response_type.split(' ');
 
-                    rts.forEach(function (rt) {
-                        var def = Q.defer();
-                        promises.push(def.promise);
-                        switch (rt) {
-                            case 'code':
-                                var createToken = function () {
-                                    var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
-                                    req.model.auth.findOne({code: token}, function (err, auth) {
-                                        if (!auth) {
-                                            setToken(token);
-                                        } else {
-                                            createToken();
-                                        }
-                                    });
-                                };
-                                var setToken = function (token) {
-                                    req.model.auth.create({
-                                        client: req.session.client_id,
-                                        scope: params.scope.split(' '),
-                                        user: req.session.user,
-                                        sub: req.session.sub || req.session.user,
-                                        code: token,
-                                        redirectUri: params.redirect_uri,
-                                        responseType: params.response_type,
-                                        status: 'created',
-                                        nonce: params.nonce
-                                    }).exec(function (err, auth) {
-                                        if (!err && auth) {
-                                            setTimeout(function () {
-                                                req.model.auth.findOne({code: token}, function (err, auth) {
-                                                    if (auth && auth.status == 'created') {
-                                                        auth.destroy();
-                                                    }
-                                                });
-                                            }, 1000 * 60 * 10); //10 minutes
-                                            def.resolve({code: token});
-                                        } else {
-                                            def.reject(err || 'Could not create auth');
-                                        }
-                                    });
-
-                                };
-                                createToken();
-                                break;
-                            case 'id_token':
-                                var d = Math.round(new Date().getTime() / 1000);
-                                //var id_token = {
-                                def.resolve({
-                                    id_token: {
-                                        iss: req.protocol + '://' + req.headers.host,
-                                        sub: req.session.sub || req.session.user,
-                                        aud: params.client_id,
-                                        exp: d + 3600,
-                                        iat: d,
-                                        nonce: params.nonce
-                                    }
-                                });
-                                //def.resolve({id_token: jwt.encode(id_token, req.session.client_secret)});
-                                break;
-                            case 'token':
-                                var createToken = function () {
-                                    var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
-                                    req.model.access.findOne({token: token}, function (err, access) {
-                                        if (!access) {
-                                            setToken(token);
-                                        } else {
-                                            createToken();
-                                        }
-                                    });
-                                };
-                                var setToken = function (token) {
-                                    var obj = {
-                                        token: token,
-                                        type: 'Bearer',
-                                        expiresIn: 3600,
-                                        user: req.session.user,
-                                        client: req.session.client_id,
-                                        scope: params.scope.split(' ')
+                        rts.forEach(function (rt) {
+                            var def = Q.defer();
+                            promises.push(def.promise);
+                            switch (rt) {
+                                case 'code':
+                                    var createToken = function () {
+                                        var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
+                                        req.model.auth.findOne({code: token}, function (err, auth) {
+                                            if (!auth) {
+                                                setToken(token);
+                                            } else {
+                                                createToken();
+                                            }
+                                        });
                                     };
-                                    req.model.access.create(obj, function (err, access) {
-                                        if (!err && access) {
-                                            setTimeout(function () {
-                                                access.destroy();
-                                            }, 1000 * 3600); //1 hour
+                                    var setToken = function (token) {
+                                        req.model.auth.create({
+                                            client: req.session.client_id,
+                                            scope: params.scope.split(' '),
+                                            user: req.session.user,
+                                            sub: req.session.sub || req.session.user,
+                                            code: token,
+                                            redirectUri: params.redirect_uri,
+                                            responseType: params.response_type,
+                                            status: 'created',
+                                            nonce: params.nonce
+                                        }).exec(function (err, auth) {
+                                            if (!err && auth) {
+                                                setTimeout(function () {
+                                                    req.model.auth.findOne({code: token}, function (err, auth) {
+                                                        if (auth && auth.status == 'created') {
+                                                            auth.destroy();
+                                                        }
+                                                    });
+                                                }, 1000 * 60 * 10); //10 minutes
+                                                def.resolve({code: token});
+                                            } else {
+                                                def.reject(err || 'Could not create auth');
+                                            }
+                                        });
 
-                                            def.resolve({
-                                                access_token: obj.token,
-                                                token_type: obj.type,
-                                                expires_in: obj.expiresIn
-                                            });
+                                    };
+                                    createToken();
+                                    break;
+                                case 'id_token':
+                                    var d = Math.round(new Date().getTime() / 1000);
+                                    //var id_token = {
+                                    def.resolve({
+                                        id_token: {
+                                            iss: req.protocol + '://' + req.headers.host,
+                                            sub: req.session.sub || req.session.user,
+                                            aud: params.client_id,
+                                            exp: d + 3600,
+                                            iat: d,
+                                            nonce: params.nonce
                                         }
                                     });
-                                };
-                                createToken();
-                                break;
-                        }
-                    });
+                                    //def.resolve({id_token: jwt.encode(id_token, req.session.client_secret)});
+                                    break;
+                                case 'token':
+                                    var createToken = function () {
+                                        var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
+                                        req.model.access.findOne({token: token}, function (err, access) {
+                                            if (!access) {
+                                                setToken(token);
+                                            } else {
+                                                createToken();
+                                            }
+                                        });
+                                    };
+                                    var setToken = function (token) {
+                                        var obj = {
+                                            token: token,
+                                            type: 'Bearer',
+                                            expiresIn: 3600,
+                                            user: req.session.user,
+                                            client: req.session.client_id,
+                                            scope: params.scope.split(' ')
+                                        };
+                                        req.model.access.create(obj, function (err, access) {
+                                            if (!err && access) {
+                                                setTimeout(function () {
+                                                    access.destroy();
+                                                }, 1000 * 3600); //1 hour
 
-                    Q.allSettled(promises).then(function (results) {
-                        var resp = {};
-                        for (var i in results) {
-                            resp = extend(resp, results[i].value || {});
-                        }
-                        if (resp.access_token && resp.id_token) {
-                            var hbuf = crypto.createHmac('sha256', req.session.client_secret).update(resp.access_token).digest();
-                            resp.id_token.ht_hash = base64url(hbuf.toString('ascii', 0, hbuf.length / 2));
-                            resp.id_token = jwt.encode(resp.id_token, req.session.client_secret);
-                        }
-                        deferred.resolve({
-                            params: params,
-                            type: params.response_type != 'code' ? 'f' : 'q',
-                            resp: resp
+                                                def.resolve({
+                                                    access_token: obj.token,
+                                                    token_type: obj.type,
+                                                    expires_in: obj.expiresIn
+                                                });
+                                            }
+                                        });
+                                    };
+                                    createToken();
+                                    break;
+                            }
                         });
-                    });
 
-                    return deferred.promise;
-                }
-            })
+                        Q.allSettled(promises).then(function (results) {
+                            var resp = {};
+                            for (var i in results) {
+                                resp = extend(resp, results[i].value || {});
+                            }
+                            if (resp.access_token && resp.id_token) {
+                                var hbuf = crypto.createHmac('sha256', req.session.client_secret).update(resp.access_token).digest();
+                                resp.id_token.ht_hash = base64url(hbuf.toString('ascii', 0, hbuf.length / 2));
+                                resp.id_token = jwt.encode(resp.id_token, req.session.client_secret);
+                            }
+                            deferred.resolve({
+                                params: params,
+                                type: params.response_type != 'code' ? 'f' : 'q',
+                                resp: resp
+                            });
+                        });
+
+                        return deferred.promise;
+                    }
+                })
                 .then(function (obj) {
                     var params = obj.params;
                     var resp = obj.resp;
@@ -772,21 +774,21 @@ OpenIDConnect.prototype.token = function () {
             } else {
 
                 Q.fcall(function () {
-                    //Step 2: check if client and secret are valid
-                    var deferred = Q.defer();
-                    req.model.client.findOne({key: client_key, secret: client_secret}, function (err, client) {
-                        if (err || !client) {
-                            deferred.reject({
-                                type: 'error',
-                                error: 'invalid_client',
-                                msg: 'Client doesn\'t exist or invalid secret.'
-                            });
-                        } else {
-                            deferred.resolve(client);
-                        }
-                    });
-                    return deferred.promise;
-                })
+                        //Step 2: check if client and secret are valid
+                        var deferred = Q.defer();
+                        req.model.client.findOne({key: client_key, secret: client_secret}, function (err, client) {
+                            if (err || !client) {
+                                deferred.reject({
+                                    type: 'error',
+                                    error: 'invalid_client',
+                                    msg: 'Client doesn\'t exist or invalid secret.'
+                                });
+                            } else {
+                                deferred.resolve(client);
+                            }
+                        });
+                        return deferred.promise;
+                    })
                     .then(function (client) {
 
                         var deferred = Q.defer();

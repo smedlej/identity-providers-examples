@@ -1,0 +1,23 @@
+{
+    "sub":true,
+    "laxcomma":true,
+    "node":true,
+    "indent":4,
+    "unused":true,
+    "browser": true,
+    "esnext": true,
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": "single",
+    "regexp": true,
+    "undef": true,
+    "strict": true,
+    "trailing": true,
+    "smarttabs": true,
+    "predef":["it", "describe", "beforeEach", "before", "afterEach", "after"]
+}
