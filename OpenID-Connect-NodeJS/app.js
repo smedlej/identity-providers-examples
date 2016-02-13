@@ -76,7 +76,7 @@ var validateUser = function (req, next) {
     userLookup.validate(req, next);
 };
 
-var afterLogin = function (err, req, res, next) {
+var afterLogin = function (req, res, next) {
     res.redirect(req.param('return_url') || '/user');
 };
 
