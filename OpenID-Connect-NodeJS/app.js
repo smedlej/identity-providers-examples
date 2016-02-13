@@ -77,11 +77,7 @@ var validateUser = function (req, next) {
 };
 
 var afterLogin = function (err, req, res, next) {
-    if (err) {
-        next(err)
-    } else {
-        res.redirect(req.param('return_url') || '/user');
-    }
+    res.redirect(req.param('return_url') || '/user');
 };
 
 var loginError = function (err, req, res, next) {
