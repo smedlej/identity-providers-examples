@@ -115,32 +115,44 @@ app.get('/user/create', function (req, res, next) {
     var head = '<head><title>Sign in</title></head>';
     var inputs = '';
     var fields = {
+        identifier: {
+            label: 'Identifiant (login)',
+            type: 'text'
+        },
         given_name: {
-            label: 'Given Name',
+            label: 'Prénom',
             type: 'text'
         },
         family_name: {
-            label: 'Family Name',
+            label: 'Nom de famille',
             type: 'text'
         },
         birthdate: {
-            label: 'Birthdate (YYYY-MM-DD)',
+            label: 'Date de naissance (YYYY-MM-DD)',
             type: 'text'
         },
         gender: {
-            label: 'Gender (male/female)',
+            label: 'Sexe (male/female)',
             type: 'text'
         },
         email: {
-            label: 'Email',
+            label: 'Adresse électronique',
             type: 'email'
         },
+        birthcountry: {
+            label: 'Pays de naissance (code COG)',
+            type: 'text'
+        },
+        birthplace: {
+            label: 'Lieu de naissance (code COG)',
+            type: 'text'
+        },
         password: {
-            label: 'Password',
+            label: 'Mot de passe',
             type: 'password'
         },
         passConfirm: {
-            label: 'Confirm Password',
+            label: 'Confirmation mot de passe',
             type: 'password'
         }
     };
@@ -158,19 +170,20 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
         if (err) {
             req.session.error = err;
         } else if (user) {
-            req.session.error = 'User already exists.';
+            req.session.error = 'Le compte existe déjà.';
         }
         if (req.session.error) {
             res.redirect(req.path);
         } else {
-            req.body.name = req.body.given_name + ' ' + (req.body.middle_name ? req.body.middle_name + ' ' : '') + req.body.family_name;
+            req.body.name = req.body.given_name + ' ' + req.body.family_name;
             req.model.user.create(req.body, function (err, user) {
                 if (err || !user) {
-                    req.session.error = err ? err : 'User could not be created.';
+                    req.session.error = 'Erreur lors de la création du compte.';
                     res.redirect(req.path);
                 } else {
                     req.session.user = user.id;
-                    res.redirect('/user');
+                    req.session.error = "Compte créé avec succès.";
+                    res.redirect('/user/create');
                 }
             });
         }

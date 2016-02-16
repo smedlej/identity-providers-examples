@@ -60,6 +60,9 @@ var defaults = {
                 password: 'string',
                 picture: 'binary',
                 birthdate: 'text',
+                birthplace: 'text',
+                birthcountry: 'text',
+                identifier: 'text',
                 gender: 'string',
                 phone_number: 'string',
                 samePassword: function (clearText) {
