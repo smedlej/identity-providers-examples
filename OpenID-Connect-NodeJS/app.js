@@ -112,55 +112,55 @@ app.get('/user/consent', function (req, res, next) {
 app.post('/user/consent', oidc.consent());
 
 app.get('/user/create', function (req, res, next) {
-    var head = '<head><title>Sign in</title></head>';
+    var head = '<head>    <script type="text/javascript" src="/js/jquery.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de compte utilisateur</title></head>';
     var inputs = '';
     var fields = {
         identifier: {
-            label: 'Identifiant (login)',
+            label: 'Identifiant (exemple : 46413193479) :',
             type: 'text'
         },
         given_name: {
-            label: 'Prénom',
+            label: 'Prénoms (exemple : Jean-Pierre Eric) :',
             type: 'text'
         },
         family_name: {
-            label: 'Nom de famille',
+            label: 'Nom de famille (exemple : De Larue) :',
             type: 'text'
         },
         birthdate: {
-            label: 'Date de naissance (YYYY-MM-DD)',
+            label: 'Date de naissance YYYY-MM-DD (exemple : 1976-01-22) :',
             type: 'text'
         },
         gender: {
-            label: 'Sexe (male/female)',
+            label: 'Sexe (male ou female) : ',
             type: 'text'
         },
         email: {
-            label: 'Adresse électronique',
+            label: 'Adresse électronique :',
             type: 'email'
         },
         birthcountry: {
-            label: 'Pays de naissance (code COG)',
+            label: 'Code COG du pays de naissance (exemple : 99100 pour la France) :',
             type: 'text'
         },
         birthplace: {
-            label: 'Lieu de naissance (code COG)',
+            label: 'Code COG du lieu de naissance (exemple : 31555 pour Toulouse)',
             type: 'text'
         },
         password: {
-            label: 'Mot de passe',
+            label: 'Mot de passe :',
             type: 'password'
         },
         passConfirm: {
-            label: 'Confirmation mot de passe',
+            label: 'Confirmation du mot de passe :',
             type: 'password'
         }
     };
     for (var i in fields) {
-        inputs += '<div><label for="' + i + '">' + fields[i].label + '</label><input type="' + fields[i].type + '" placeholder="' + fields[i].label + '" id="' + i + '"  name="' + i + '"/></div>';
+        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
     var error = req.session.error ? '<div>' + req.session.error + '</div>' : '';
-    var body = '<body><h1>Sign in</h1><form method="POST">' + inputs + '<input type="submit"/></form>' + error;
+    var body = '<body><h1>Création de compte utilisateur</h1><p>Tous les champs sont obligatoires.</p><form method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
     res.send('<html>' + head + body + '</html>');
 });
 
