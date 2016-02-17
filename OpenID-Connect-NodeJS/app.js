@@ -118,7 +118,7 @@ app.get('/user/create', function (req, res) {
     var inputs = '';
     var fields = {
         identifier: {
-            label: 'Identifiant (exemple : 46413193479) :',
+            label: 'Identifiant qui sera utilisé pour l\'authentification (exemple : 46413193479) :',
             type: 'text'
         },
         given_name: {
