@@ -1,3 +1,5 @@
+'use strict';
+
 var crypto = require('crypto'),
     express = require('express'),
     session = require('express-session'),
@@ -63,8 +65,8 @@ app.get('/', function (req, res) {
     res.redirect('/my/login');
 });
 
-app.get('/my/login', function (req, res, next) {
-    if (configManager.getIdentityProvider() === "ameli") {
+app.get('/my/login', function (req, res) {
+    if (configManager.getIdentityProvider() === 'ameli') {
         res.render('ameli/login', {error: req.session.error});
     } else {
         res.render('impots/login', {error: req.session.error});
@@ -76,11 +78,11 @@ var validateUser = function (req, next) {
     userLookup.validate(req, next);
 };
 
-var afterLogin = function (req, res, next) {
+var afterLogin = function (req, res) {
     res.redirect(req.param('return_url') || '/user');
 };
 
-var loginError = function (err, req, res, next) {
+var loginError = function (err, req, res) {
     req.session.error = err.message;
     res.redirect(req.originalUrl);
 };
@@ -88,7 +90,7 @@ var loginError = function (err, req, res, next) {
 app.post('/my/login', oidc.login(validateUser), afterLogin, loginError);
 
 
-app.all('/logout', oidc.removetokens(), function (req, res, next) {
+app.all('/logout', oidc.removetokens(), function (req, res) {
     req.session.destroy();
     res.redirect('/my/login');
 });
@@ -97,7 +99,7 @@ app.get('/user/authorize', oidc.auth());
 
 app.post('/user/token', oidc.token());
 
-app.get('/user/consent', function (req, res, next) {
+app.get('/user/consent', function (req, res) {
     var head = '<head><title>Consent</title></head>';
     var lis = [];
     for (var i in req.session.scopes) {
@@ -111,7 +113,7 @@ app.get('/user/consent', function (req, res, next) {
 
 app.post('/user/consent', oidc.consent());
 
-app.get('/user/create', function (req, res, next) {
+app.get('/user/create', function (req, res) {
     var head = '<head>    <script type="text/javascript" src="/js/jquery.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de compte utilisateur</title></head>';
     var inputs = '';
     var fields = {
@@ -157,14 +159,14 @@ app.get('/user/create', function (req, res, next) {
         }
     };
     for (var i in fields) {
-        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
+        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" required="true" type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
-    var error = req.session.error ? '<div>' + req.session.error + '</div>' : '';
-    var body = '<body><h1>Création de compte utilisateur</h1><p>Tous les champs sont obligatoires.</p><form method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
+    var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
+    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires.</p><form method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
     res.send('<html>' + head + body + '</html>');
 });
 
-app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res, next) {
+app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
     req.model.user.findOne({email: req.body.email}, function (err, user) {
         if (err) {
@@ -182,7 +184,7 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                     res.redirect(req.path);
                 } else {
                     req.session.user = user.id;
-                    req.session.error = "Compte créé avec succès.";
+                    req.session.error = 'Compte créé avec succès.';
                     res.redirect('/user/create');
                 }
             });
@@ -190,7 +192,7 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
     });
 });
 
-app.get('/user', oidc.check(), function (req, res, next) {
+app.get('/user', oidc.check(), function (req, res) {
     res.send('<h1>User Page</h1><div><a href="/client">See registered clients of user</a></div>');
 });
 
@@ -257,10 +259,10 @@ app.post('/client/register', oidc.use('client'), function (req, res, next) {
     });
 });
 
-app.get('/client', oidc.use('client'), function (req, res, next) {
+app.get('/client', oidc.use('client'), function (req, res) {
     var head = '<h1>Clients Page</h1><div><a href="/client/register"/>Register new client</a></div>';
     req.model.client.find({}, function (err, clients) {
-        var body = ["<ul>"];
+        var body = ['<ul>'];
         clients.forEach(function (client) {
             body.push('<li><a href="/client/' + client.id + '">' + client.name + '</li>');
         });
@@ -286,42 +288,43 @@ app.get('/client/:id', oidc.use('client'), function (req, res, next) {
     });
 });
 
-app.get('/test/clear', function (req, res, next) {
+app.get('/test/clear', function (req, res) {
     test = {status: 'new'};
     res.redirect('/test');
 });
 
-app.get('/test', oidc.use({policies: {loggedIn: false}, models: 'client'}), function (req, res, next) {
+app.get('/test', oidc.use({policies: {loggedIn: false}, models: 'client'}), function (req, res) {
     var html = '<h1>Test Auth Flows</h1>';
     var resOps = {
-        "/user/foo": "Restricted by foo scope",
-        "/user/bar": "Restricted by bar scope",
-        "/user/and": "Restricted by 'bar and foo' scopes",
-        "/user/or": "Restricted by 'bar or foo' scopes",
-        "/api/user": "User Info Endpoint"
+        '/user/foo': "Restricted by foo scope",
+        '/user/bar': "Restricted by bar scope",
+        '/user/and': "Restricted by 'bar and foo' scopes",
+        '/user/or': "Restricted by 'bar or foo' scopes",
+        '/api/user': "User Info Endpoint"
     };
     var mkinputs = function (name, desc, type, value, options) {
         var inp = '';
+        var i;
         switch (type) {
             case 'select':
                 inp = '<select id="' + name + '" name="' + name + '">';
-                for (var i in options) {
-                    inp += '<option value="' + i + '"' + (value && value == i ? ' selected' : '') + '>' + options[i] + '</option>';
+                for (i in options) {
+                    inp += '<option value="' + i + '"' + (value && value === i ? ' selected' : '') + '>' + options[i] + '</option>';
                 }
                 inp += '</select>';
                 inp = '<div><label for="' + name + '">' + (desc || name) + '</label>' + inp + '</div>';
                 break;
             default:
                 if (options) {
-                    for (var i in options) {
+                    for (i in options) {
                         inp += '<div>' +
                             '<label for="' + name + '_' + i + '">' + options[i] + '</label>' +
-                            '<input id="' + name + '_' + i + ' name="' + name + '" type="' + (type || 'radio') + '" value="' + i + '"' + (value && value == i ? ' checked' : '') + '>' +
+                            '<input id="' + name + '_' + i + ' name="' + name + '" type="' + (type || 'radio') + '" value="' + i + '"' + (value && value === i ? ' checked' : '') + '>' +
                             '</div>';
                     }
                 } else {
                     inp = '<input type="' + (type || 'text') + '" id="' + name + '"  name="' + name + '" value="' + (value || '') + '">';
-                    if (type != 'hidden') {
+                    if (type !== 'hidden') {
                         inp = '<div><label for="' + name + '">' + (desc || name) + '</label>' + inp + '</div>';
                     }
                 }
@@ -329,12 +332,12 @@ app.get('/test', oidc.use({policies: {loggedIn: false}, models: 'client'}), func
         return inp;
     };
     switch (test.status) {
-        case "new":
+        case 'new':
             req.model.client.find().populate('user').exec(function (err, clients) {
                 var inputs = [];
                 inputs.push(mkinputs('response_type', 'Auth Flow', 'select', null, {
                     code: 'Auth Code',
-                    "id_token token": 'Implicit'
+                    'id_token token': 'Implicit'
                 }));
                 var options = {};
                 clients.forEach(function (client) {
@@ -356,7 +359,7 @@ app.get('/test', oidc.use({policies: {loggedIn: false}, models: 'client'}), func
             break;
         case '2':
             extend(test, req.query);
-            if (test.response_type == 'code') {
+            if (test.response_type === 'code') {
                 test.status = '3';
                 var inputs = [];
                 //var c = test.client_id.split(':');
@@ -364,7 +367,7 @@ app.get('/test', oidc.use({policies: {loggedIn: false}, models: 'client'}), func
                 res.send(html + '<form method="GET">' + inputs.join('') + '<input type="submit" value="Get Token"/></form>');
             } else {
                 test.status = '4';
-                html += "Got: <div id='data'></div>";
+                html += 'Got: <div id="data"></div>';
                 var inputs = [];
                 //var c = test.client_id.split(':');
                 inputs.push(mkinputs('access_token', 'Access Token', 'text'));
