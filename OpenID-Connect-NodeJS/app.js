@@ -162,7 +162,7 @@ app.get('/user/create', function (req, res) {
         inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" required="true" type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
     var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
-    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires.</p><form method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
+    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires. Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</p><form method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
     res.send('<html>' + head + body + '</html>');
 });
 
