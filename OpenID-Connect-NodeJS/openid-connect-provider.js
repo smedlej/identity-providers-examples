@@ -1,3 +1,5 @@
+'use strict';
+
 var EventEmitter = require('events').EventEmitter,
     querystring = require('querystring'),
     modelling = require('modelling'),
@@ -7,7 +9,7 @@ var EventEmitter = require('events').EventEmitter,
     url = require('url'),
     Q = require('q'),
     jwt = require('jwt-simple'),
-    util = require("util"),
+    util = require('util'),
     base64url = require('base64url'),
     cleanObj = require('clean-obj'),
     configManager = new (require('./helpers/configManager.js'))();
@@ -56,26 +58,23 @@ var defaults = {
                 given_name: {type: 'string', required: true},
                 family_name: {type: 'string', required: true},
                 profile: 'string',
-                email: {type: 'string', email: true, required: true, unique: true},
-                password: 'string',
+                email: {type: 'string', required: true},
+                password: {type: 'string', required: true},
                 picture: 'binary',
-                birthdate: 'text',
-                birthplace: 'text',
-                birthcountry: 'text',
-                identifier: 'text',
-                gender: 'string',
+                birthdate: {type: 'string', required: true},
+                birthplace: {type: 'string', required: true},
+                birthcountry: {type: 'string', required: true},
+                identifier: {type: 'string', required: true, unique: true},
+                gender: {type: 'string', required: true},
                 phone_number: 'string',
                 samePassword: function (clearText) {
                     var sha256 = crypto.createHash('sha256');
                     sha256.update(clearText);
-                    return this.password == sha256.digest('hex');
+                    return this.password === sha256.digest('hex');
                 }
             },
             beforeCreate: function (values, next) {
                 if (values.password) {
-                    if (values.password != values.passConfirm) {
-                        return next("Password and confirmation does not match");
-                    }
                     var sha256 = crypto.createHash('sha256');
                     sha256.update(values.password);
                     values.password = sha256.digest('hex');
@@ -84,9 +83,6 @@ var defaults = {
             },
             beforeUpdate: function (values, next) {
                 if (values.password) {
-                    if (values.password != values.passConfirm) {
-                        return next("Password and confirmation does not match");
-                    }
                     var sha256 = crypto.createHash('sha256');
                     sha256.update(values.password);
                     values.password = sha256.digest('hex');
@@ -110,14 +106,15 @@ var defaults = {
                 credentialsFlow: {type: 'boolean', defaultsTo: false}
             },
             beforeCreate: function (values, next) {
+                var sha256;
                 if (!values.key) {
-                    var sha256 = crypto.createHash('sha256');
+                    sha256 = crypto.createHash('sha256');
                     sha256.update(values.name);
                     sha256.update(Math.random() + '');
                     values.key = sha256.digest('hex');
                 }
                 if (!values.secret) {
-                    var sha256 = crypto.createHash('sha256');
+                    sha256 = crypto.createHash('sha256');
                     sha256.update(values.key);
                     sha256.update(values.name);
                     sha256.update(Math.random() + '');
@@ -192,22 +189,25 @@ var defaults = {
 };
 
 function parse_authorization(authorization) {
-    if (!authorization)
+    if (!authorization) {
         return null;
+    }
 
     var parts = authorization.split(' ');
 
-    if (parts.length != 2 || parts[0] != 'Basic')
+    if (parts.length !== 2 || parts[0] !== 'Basic') {
         return null;
+    }
 
     var creds = new Buffer(parts[1], 'base64').toString(),
         i = creds.indexOf(':');
 
-    if (i == -1)
+    if (i === -1) {
         return null;
+    }
 
     var username = creds.slice(0, i);
-    password = creds.slice(i + 1);
+    var password = creds.slice(i + 1);
 
     return [username, password];
 }
@@ -321,7 +321,7 @@ OpenIDConnect.prototype.parseParams = function (req, res, spec) {
         var x = params[i];
         if (!x) {
             var error = false;
-            if (typeof spec[i] == 'boolean') {
+            if (typeof spec[i] === 'boolean') {
                 error = spec[i];
             } else if (_.isPlainObject(spec[i])) {
                 for (var j in spec[i]) {
@@ -532,133 +532,133 @@ OpenIDConnect.prototype.auth = function () {
 
                 return deferred.promise;
             }).then(function (params) {
-                //Step 5: create responses
-                if (params.response_type == 'none') {
-                    return {params: params, resp: {}};
-                } else {
-                    var deferred = Q.defer();
-                    var promises = [];
+                    //Step 5: create responses
+                    if (params.response_type == 'none') {
+                        return {params: params, resp: {}};
+                    } else {
+                        var deferred = Q.defer();
+                        var promises = [];
 
-                    var rts = params.response_type.split(' ');
+                        var rts = params.response_type.split(' ');
 
-                    rts.forEach(function (rt) {
-                        var def = Q.defer();
-                        promises.push(def.promise);
-                        switch (rt) {
-                            case 'code':
-                                var createToken = function () {
-                                    var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
-                                    req.model.auth.findOne({code: token}, function (err, auth) {
-                                        if (!auth) {
-                                            setToken(token);
-                                        } else {
-                                            createToken();
-                                        }
-                                    });
-                                };
-                                var setToken = function (token) {
-                                    req.model.auth.create({
-                                        client: req.session.client_id,
-                                        scope: params.scope.split(' '),
-                                        user: req.session.user,
-                                        sub: req.session.sub || req.session.user,
-                                        code: token,
-                                        redirectUri: params.redirect_uri,
-                                        responseType: params.response_type,
-                                        status: 'created',
-                                        nonce: params.nonce
-                                    }).exec(function (err, auth) {
-                                        if (!err && auth) {
-                                            setTimeout(function () {
-                                                req.model.auth.findOne({code: token}, function (err, auth) {
-                                                    if (auth && auth.status == 'created') {
-                                                        auth.destroy();
-                                                    }
-                                                });
-                                            }, 1000 * 60 * 10); //10 minutes
-                                            def.resolve({code: token});
-                                        } else {
-                                            def.reject(err || 'Could not create auth');
-                                        }
-                                    });
-
-                                };
-                                createToken();
-                                break;
-                            case 'id_token':
-                                var d = Math.round(new Date().getTime() / 1000);
-                                //var id_token = {
-                                def.resolve({
-                                    id_token: {
-                                        iss: req.protocol + '://' + req.headers.host,
-                                        sub: req.session.sub || req.session.user,
-                                        aud: params.client_id,
-                                        exp: d + 3600,
-                                        iat: d,
-                                        nonce: params.nonce
-                                    }
-                                });
-                                //def.resolve({id_token: jwt.encode(id_token, req.session.client_secret)});
-                                break;
-                            case 'token':
-                                var createToken = function () {
-                                    var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
-                                    req.model.access.findOne({token: token}, function (err, access) {
-                                        if (!access) {
-                                            setToken(token);
-                                        } else {
-                                            createToken();
-                                        }
-                                    });
-                                };
-                                var setToken = function (token) {
-                                    var obj = {
-                                        token: token,
-                                        type: 'Bearer',
-                                        expiresIn: 3600,
-                                        user: req.session.user,
-                                        client: req.session.client_id,
-                                        scope: params.scope.split(' ')
+                        rts.forEach(function (rt) {
+                            var def = Q.defer();
+                            promises.push(def.promise);
+                            switch (rt) {
+                                case 'code':
+                                    var createToken = function () {
+                                        var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
+                                        req.model.auth.findOne({code: token}, function (err, auth) {
+                                            if (!auth) {
+                                                setToken(token);
+                                            } else {
+                                                createToken();
+                                            }
+                                        });
                                     };
-                                    req.model.access.create(obj, function (err, access) {
-                                        if (!err && access) {
-                                            setTimeout(function () {
-                                                access.destroy();
-                                            }, 1000 * 3600); //1 hour
+                                    var setToken = function (token) {
+                                        req.model.auth.create({
+                                            client: req.session.client_id,
+                                            scope: params.scope.split(' '),
+                                            user: req.session.user,
+                                            sub: req.session.sub || req.session.user,
+                                            code: token,
+                                            redirectUri: params.redirect_uri,
+                                            responseType: params.response_type,
+                                            status: 'created',
+                                            nonce: params.nonce
+                                        }).exec(function (err, auth) {
+                                            if (!err && auth) {
+                                                setTimeout(function () {
+                                                    req.model.auth.findOne({code: token}, function (err, auth) {
+                                                        if (auth && auth.status == 'created') {
+                                                            auth.destroy();
+                                                        }
+                                                    });
+                                                }, 1000 * 60 * 10); //10 minutes
+                                                def.resolve({code: token});
+                                            } else {
+                                                def.reject(err || 'Could not create auth');
+                                            }
+                                        });
 
-                                            def.resolve({
-                                                access_token: obj.token,
-                                                token_type: obj.type,
-                                                expires_in: obj.expiresIn
-                                            });
+                                    };
+                                    createToken();
+                                    break;
+                                case 'id_token':
+                                    var d = Math.round(new Date().getTime() / 1000);
+                                    //var id_token = {
+                                    def.resolve({
+                                        id_token: {
+                                            iss: req.protocol + '://' + req.headers.host,
+                                            sub: req.session.sub || req.session.user,
+                                            aud: params.client_id,
+                                            exp: d + 3600,
+                                            iat: d,
+                                            nonce: params.nonce
                                         }
                                     });
-                                };
-                                createToken();
-                                break;
-                        }
-                    });
+                                    //def.resolve({id_token: jwt.encode(id_token, req.session.client_secret)});
+                                    break;
+                                case 'token':
+                                    var createToken = function () {
+                                        var token = crypto.createHash('md5').update(params.client_id).update(Math.random() + '').digest('hex');
+                                        req.model.access.findOne({token: token}, function (err, access) {
+                                            if (!access) {
+                                                setToken(token);
+                                            } else {
+                                                createToken();
+                                            }
+                                        });
+                                    };
+                                    var setToken = function (token) {
+                                        var obj = {
+                                            token: token,
+                                            type: 'Bearer',
+                                            expiresIn: 3600,
+                                            user: req.session.user,
+                                            client: req.session.client_id,
+                                            scope: params.scope.split(' ')
+                                        };
+                                        req.model.access.create(obj, function (err, access) {
+                                            if (!err && access) {
+                                                setTimeout(function () {
+                                                    access.destroy();
+                                                }, 1000 * 3600); //1 hour
 
-                    Q.allSettled(promises).then(function (results) {
-                        var resp = {};
-                        for (var i in results) {
-                            resp = extend(resp, results[i].value || {});
-                        }
-                        if (resp.access_token && resp.id_token) {
-                            var hbuf = crypto.createHmac('sha256', req.session.client_secret).update(resp.access_token).digest();
-                            resp.id_token.ht_hash = base64url(hbuf.toString('ascii', 0, hbuf.length / 2));
-                            resp.id_token = jwt.encode(resp.id_token, req.session.client_secret);
-                        }
-                        deferred.resolve({
-                            params: params,
-                            type: params.response_type != 'code' ? 'f' : 'q',
-                            resp: resp
+                                                def.resolve({
+                                                    access_token: obj.token,
+                                                    token_type: obj.type,
+                                                    expires_in: obj.expiresIn
+                                                });
+                                            }
+                                        });
+                                    };
+                                    createToken();
+                                    break;
+                            }
                         });
-                    });
 
-                    return deferred.promise;
-                }
-            })
+                        Q.allSettled(promises).then(function (results) {
+                            var resp = {};
+                            for (var i in results) {
+                                resp = extend(resp, results[i].value || {});
+                            }
+                            if (resp.access_token && resp.id_token) {
+                                var hbuf = crypto.createHmac('sha256', req.session.client_secret).update(resp.access_token).digest();
+                                resp.id_token.ht_hash = base64url(hbuf.toString('ascii', 0, hbuf.length / 2));
+                                resp.id_token = jwt.encode(resp.id_token, req.session.client_secret);
+                            }
+                            deferred.resolve({
+                                params: params,
+                                type: params.response_type != 'code' ? 'f' : 'q',
+                                resp: resp
+                            });
+                        });
+
+                        return deferred.promise;
+                    }
+                })
                 .then(function (obj) {
                     var params = obj.params;
                     var resp = obj.resp;
@@ -775,21 +775,21 @@ OpenIDConnect.prototype.token = function () {
             } else {
 
                 Q.fcall(function () {
-                    //Step 2: check if client and secret are valid
-                    var deferred = Q.defer();
-                    req.model.client.findOne({key: client_key, secret: client_secret}, function (err, client) {
-                        if (err || !client) {
-                            deferred.reject({
-                                type: 'error',
-                                error: 'invalid_client',
-                                msg: 'Client doesn\'t exist or invalid secret.'
-                            });
-                        } else {
-                            deferred.resolve(client);
-                        }
-                    });
-                    return deferred.promise;
-                })
+                        //Step 2: check if client and secret are valid
+                        var deferred = Q.defer();
+                        req.model.client.findOne({key: client_key, secret: client_secret}, function (err, client) {
+                            if (err || !client) {
+                                deferred.reject({
+                                    type: 'error',
+                                    error: 'invalid_client',
+                                    msg: 'Client doesn\'t exist or invalid secret.'
+                                });
+                            } else {
+                                deferred.resolve(client);
+                            }
+                        });
+                        return deferred.promise;
+                    })
                     .then(function (client) {
 
                         var deferred = Q.defer();
@@ -1088,7 +1088,7 @@ OpenIDConnect.prototype.check = function () {
         scopes = [scopes];
     }
     var self = this;
-    spec = {
+    var spec = {
         access_token: false
     };
 
@@ -1112,8 +1112,8 @@ OpenIDConnect.prototype.check = function () {
                                 var errors = [];
 
                                 scopes.forEach(function (scope) {
-                                    if (typeof scope == 'string') {
-                                        if (access.scope.indexOf(scope) == -1) {
+                                    if (typeof scope === 'string') {
+                                        if (access.scope.indexOf(scope) === -1) {
                                             errors.push(scope);
                                         }
                                     } else if (util.isRegExp(scope)) {
