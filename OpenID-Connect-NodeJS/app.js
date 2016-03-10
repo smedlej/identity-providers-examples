@@ -50,6 +50,8 @@ var options = {
 };
 var oidc = require('./openid-connect-provider.js').oidc(options);
 
+var DGFIP_FIELDS = ['dgfip_rfr', 'dgfip_nbpac', 'dgfip_sitfam', 'dgfip_nbpart'];
+
 app.set('port', process.env.PORT || 3042);
 app.use(logger('dev'));
 app.use(bodyParser());
@@ -147,10 +149,30 @@ app.get('/user/create', function (req, res) {
         password: {
             label: 'Mot de passe :',
             type: 'password'
+        },
+        dgfip_rfr: {
+            label: 'Revenu fiscal de référence',
+            type: 'number'
+        },
+        dgfip_nbpac: {
+            label: 'Nombre de personnes à charge',
+            type: 'number'
+        },
+        dgfip_sitfam: {
+            label: 'Situation familiale (valeurs possibles : M, C, D, O, V)',
+            type: 'text'
+        },
+        dgfip_nbpart: {
+            label: 'Nombre de parts',
+            type: 'number'
         }
     };
     for (var i in fields) {
-        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" required="true" type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
+        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control"';
+        if(i.indexOf('dgfip')===-1){
+            inputs+= 'required="true"';
+        }
+        inputs += 'type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
     var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
     var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires. Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</p><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
@@ -159,6 +181,11 @@ app.get('/user/create', function (req, res) {
 
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
+    DGFIP_FIELDS.forEach(function(dgfip_field){
+        if (req.body[dgfip_field]===''){
+            delete req.body[dgfip_field];
+        }
+    });
     req.model.user.findOne({identifier: req.body.identifier}, function (err, user) {
         if (err) {
             req.session.error = err;

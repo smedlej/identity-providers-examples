@@ -67,6 +67,10 @@ var defaults = {
                 identifier: {type: 'string', required: true, unique: true},
                 gender: {type: 'string', required: true},
                 phone_number: 'string',
+                dgfip_rfr : 'integer',
+                dgfip_nbpac : 'integer',
+                dgfip_sitfam : 'string',
+                dgfip_nbpart : 'float',
                 samePassword: function (clearText) {
                     var sha256 = crypto.createHash('sha256');
                     sha256.update(clearText);
