@@ -16,5 +16,6 @@
       "user": "",
       "pass": ""
     }
-   }
+   },
+  "recaptchaSecret": "secret"
 }

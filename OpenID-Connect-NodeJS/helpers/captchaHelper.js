@@ -1,12 +1,13 @@
 'use strict';
-var https = require('https');
+var https = require('https'),
+    configManager = new (require('./configManager.js'))();
 
 var CaptchaHelper = {};
 
 CaptchaHelper.getCpatchaValidationResponse = function (req, callback) {
     var options = {
         hostname: 'www.google.com',
-        path: '/recaptcha/api/siteverify?secret=secret&response=' + req.body['g-recaptcha-response'],
+        path: '/recaptcha/api/siteverify?secret='+configManager.getRecaptchaSecret()+'&response=' + req.body['g-recaptcha-response'],
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

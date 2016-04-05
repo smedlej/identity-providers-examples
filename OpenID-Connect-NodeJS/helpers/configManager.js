@@ -40,4 +40,8 @@ Configuration.prototype.getIdentityProvider = function(){
     return this._rawConfig.identityProvider;
 };
 
+Configuration.prototype.getRecaptchaSecret = function(){
+    return this._rawConfig.recaptchaSecret;
+};
+
 module.exports = Configuration;
