@@ -12,7 +12,8 @@ var crypto = require('crypto'),
     errorHandler = require('errorhandler'),
     methodOverride = require('method-override'),
     configManager = new (require('./helpers/configManager.js'))(),
-    userLookup = new (require('./helpers/userLookup.js'))();
+    userLookup = new (require('./helpers/userLookup.js'))(),
+    captchaHelper = require('./helpers/captchaHelper.js');
 
 var app = express();
 
@@ -111,7 +112,7 @@ app.get('/user/consent', function (req, res) {
 app.post('/user/consent', oidc.consent());
 
 app.get('/user/create', function (req, res) {
-    var head = '<head>    </script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/garlic.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de compte utilisateur</title></head>';
+    var head = '<head>    </script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/garlic.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de compte utilisateur</title><script src="https://www.google.com/recaptcha/api.js"></script></head>';
     var inputs = '';
     var fields = {
         identifier: {
@@ -175,39 +176,49 @@ app.get('/user/create', function (req, res) {
         inputs += 'type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
     var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
-    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires. Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</p><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<input class="btn btn-default" type="submit"/></form>' + error;
+    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires. Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</p><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<div class="g-recaptcha" data-sitekey="6LfxVxwTAAAAAJ0F1mUqmpMMsB6N1nlR41OCIJ-C"></div><input class="btn btn-default" type="submit"/></form>' + error;
     res.send('<html>' + head + body + '</html>');
 });
 
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
-    DGFIP_FIELDS.forEach(function(dgfip_field){
-        if (req.body[dgfip_field]===''){
-            delete req.body[dgfip_field];
-        }
-    });
-    req.model.user.findOne({identifier: req.body.identifier}, function (err, user) {
-        if (err) {
-            req.session.error = err;
-        } else if (user) {
-            req.session.error = 'Le compte existe déjà.';
-        }
-        if (req.session.error) {
+
+    captchaHelper.getCpatchaValidationResponse(req, function(err, result){
+        if(err || !result.success){
+            req.session.error = 'Erreur lors de la validation du captcha.';
             res.redirect(req.path);
-        } else {
-            req.body.name = req.body.given_name + ' ' + req.body.family_name;
-            req.model.user.create(req.body, function (err, user) {
-                if (err || !user) {
-                    console.error(err);
-                    req.session.error = 'Erreur lors de la création du compte.';
+        }
+        else {
+            DGFIP_FIELDS.forEach(function(dgfip_field){
+                if (req.body[dgfip_field]===''){
+                    delete req.body[dgfip_field];
+                }
+            });
+            req.model.user.findOne({identifier: req.body.identifier}, function (err, user) {
+                if (err) {
+                    req.session.error = err;
+                } else if (user) {
+                    req.session.error = 'Le compte existe déjà.';
+                }
+                if (req.session.error) {
                     res.redirect(req.path);
                 } else {
-                    req.session.user = user.id;
-                    req.session.error = 'Compte créé avec succès.';
-                    res.redirect('/user/create');
+                    req.body.name = req.body.given_name + ' ' + req.body.family_name;
+                    req.model.user.create(req.body, function (err, user) {
+                        if (err || !user) {
+                            console.error(err);
+                            req.session.error = 'Erreur lors de la création du compte.';
+                            res.redirect(req.path);
+                        } else {
+                            req.session.user = user.id;
+                            req.session.error = 'Compte créé avec succès.';
+                            res.redirect('/user/create');
+                        }
+                    });
                 }
             });
         }
+
     });
 });
 
