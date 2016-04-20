@@ -112,71 +112,86 @@ app.get('/user/consent', function (req, res) {
 app.post('/user/consent', oidc.consent());
 
 app.get('/user/create', function (req, res) {
-    var head = '<head>    </script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/garlic.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de compte utilisateur</title><script src="https://www.google.com/recaptcha/api.js"></script></head>';
+    var head = '<head></script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/garlic.min.js"></script><link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="/stylesheets/style.css" rel="stylesheet" type="text/css"><title>Création de jeu de données utilisateur en environnement d\'intégration</title></head>';
     var inputs = '';
+    var inputs_dgfip = '';
     var fields = {
         identifier: {
-            label: 'Identifiant qui sera utilisé pour l\'authentification (exemple : 46413193479) :',
-            type: 'text'
+            label: 'Identifiant qui sera utilisé pour l\'authentification :',
+            type: 'text',
+            placeholder: 'exemple : 46413193479'
         },
         given_name: {
-            label: 'Prénoms (exemple : Jean-Pierre Eric) :',
-            type: 'text'
+            label: 'Prénoms :',
+            type: 'text',
+            placeholder: 'exemple : Jean-Pierre Eric'
         },
         family_name: {
-            label: 'Nom de famille (exemple : De Larue) :',
-            type: 'text'
+            label: 'Nom de famille :',
+            type: 'text',
+            placeholder: 'exemple : De Larue'
         },
         birthdate: {
-            label: 'Date de naissance YYYY-MM-DD (exemple : 1976-01-22) :',
-            type: 'text'
+            label: 'Date de naissance YYYY-MM-DD :',
+            type: 'text',
+            placeholder: 'exemple : 1976-01-22'
         },
         gender: {
-            label: 'Sexe (male ou female) : ',
-            type: 'text'
+            label: 'Sexe : ',
+            type: 'text',
+            placeholder: 'male ou female'
         },
         email: {
             label: 'Adresse électronique :',
-            type: 'email'
+            type: 'email',
+            placeholder: ''
         },
         birthcountry: {
-            label: 'Code COG du pays de naissance (exemple : 99100 pour la France) :',
-            type: 'text'
+            label: 'Code COG du pays de naissance :',
+            type: 'text',
+            placeholder: 'exemple : 99100 pour la France'
         },
         birthplace: {
-            label: 'Code COG du lieu de naissance (exemple : 31555 pour Toulouse)',
-            type: 'text'
+            label: 'Code COG du lieu de naissance',
+            type: 'text',
+            placeholder: 'exemple : 31555 pour Toulouse'
         },
         password: {
             label: 'Mot de passe :',
-            type: 'password'
+            type: 'password',
+            placeholder: ''
         },
         dgfip_rfr: {
             label: 'Revenu fiscal de référence',
-            type: 'number'
+            type: 'number',
+            placeholder: ''
         },
         dgfip_nbpac: {
             label: 'Nombre de personnes à charge',
-            type: 'number'
+            type: 'number',
+            placeholder: ''
         },
         dgfip_sitfam: {
-            label: 'Situation familiale (valeurs possibles : M, C, D, O, V)',
-            type: 'text'
+            label: 'Situation familiale',
+            type: 'text',
+            placeholder: 'valeurs possibles : M, C, D, O, V'
         },
         dgfip_nbpart: {
             label: 'Nombre de parts',
-            type: 'number'
+            type: 'number',
+            placeholder: ''
         }
     };
     for (var i in fields) {
-        inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control"';
+        
         if(i.indexOf('dgfip')===-1){
-            inputs+= 'required="true"';
+          inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" required="true" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
+        } else {
+          inputs_dgfip += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
         }
-        inputs += 'type="' + fields[i].type + '" id="' + i + '"  name="' + i + '"/></div>';
     }
     var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
-    var body = '<body><h1>Création de compte utilisateur</h1>' + error + '<p>Tous les champs sont obligatoires. Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</p><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<div class="g-recaptcha" data-sitekey="6LfxVxwTAAAAAJ0F1mUqmpMMsB6N1nlR41OCIJ-C"></div><input class="btn btn-default" type="submit"/></form>' + error;
+    var body = '<body><div class="row"><div class="col-md-6 col-md-offset-3"><div class="panel panel-default"><div class="panel-heading" style="padding-top: 15px; padding-bottom: 15px;"><h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur <br/>en environnement d\'intégration</h1></div><div class="panel-body" style="padding: 25px;">' + error + '<div class="alert alert-warning text-center" style="margin-bottom: 25px;"><strong>Tous les champs sont obligatoires.</strong> Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</div><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<hr/> <p>Si vous souhaitez appeler le FD bouchon DGFIP, vous pouvez aussi remplir les informations suivantes :</p>' + inputs_dgfip + '<input class="btn btn-primary btn-lg btn-block" type="submit"/></form>' + error + '</div></div></div></div></body>';
     res.send('<html>' + head + body + '</html>');
 });
 
