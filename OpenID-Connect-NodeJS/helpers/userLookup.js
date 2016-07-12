@@ -50,7 +50,11 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             }
         }
         console.log(pivotIdentity);
-        res.json(pivotIdentity);
+        if (pivotIdentity.given_name) {
+            res.json(pivotIdentity);
+        } else {
+            res.status(400).send();
+        }
     });
 };
 
