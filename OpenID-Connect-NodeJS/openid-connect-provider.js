@@ -62,7 +62,7 @@ var defaults = {
                 password: {type: 'string', required: true},
                 picture: 'binary',
                 birthdate: {type: 'string', required: true},
-                birthplace: {type: 'string', required: true},
+                birthplace: {type: 'string'},
                 birthcountry: {type: 'string', required: true},
                 identifier: {type: 'string', required: true, unique: true},
                 gender: {type: 'string', required: true},

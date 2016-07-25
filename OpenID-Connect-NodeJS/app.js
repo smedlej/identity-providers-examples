@@ -152,7 +152,7 @@ app.get('/user/create', function (req, res) {
             placeholder: 'exemple : 99100 pour la France'
         },
         birthplace: {
-            label: 'Code COG du lieu de naissance',
+            label: 'Code COG du lieu de naissance - à renseigner si le COG pays n\'est pas la France',
             type: 'text',
             placeholder: 'exemple : 31555 pour Toulouse'
         },
@@ -183,15 +183,15 @@ app.get('/user/create', function (req, res) {
         }
     };
     for (var i in fields) {
-        
         if(i.indexOf('dgfip')===-1){
-          inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" required="true" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
+            inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + ' "placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"';
+            inputs += (i!== 'birthplace')? 'required="true"/></div>' : '/></div>';
         } else {
-          inputs_dgfip += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
+            inputs_dgfip += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
         }
     }
     var error = req.session.error ? '<div class="alert alert-warning">' + req.session.error + '</div>' : '';
-    var body = '<body><div class="row"><div class="col-md-6 col-md-offset-3"><div class="panel panel-default"><div class="panel-heading" style="padding-top: 15px; padding-bottom: 15px;"><h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur <br/>en environnement d\'intégration</h1></div><div class="panel-body" style="padding: 25px;">' + error + '<div class="alert alert-warning text-center" style="margin-bottom: 25px;"><strong>Tous les champs sont obligatoires.</strong> Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</div><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<hr/> <p>Si vous souhaitez appeler le FD bouchon DGFIP, vous pouvez aussi remplir les informations suivantes :</p>' + inputs_dgfip + '<div class="g-recaptcha" data-sitekey="6LfxVxwTAAAAAJ0F1mUqmpMMsB6N1nlR41OCIJ-C"></div><input class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;" type="submit"/></form>' + error + '</div></div></div></div></body>';
+    var body = '<body><div class="row"><div class="col-md-6 col-md-offset-3"><div class="panel panel-default"><div class="panel-heading" style="padding-top: 15px; padding-bottom: 15px;"><h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur <br/>en environnement d\'intégration</h1></div><div class="panel-body" style="padding: 25px;">' + error + '<div class="alert alert-warning text-center" style="margin-bottom: 25px;"><strong>Tous les champs sont obligatoires (sauf précisé).</strong> Les comptes seront disponibles dans les 2 bouchons de fournisseurs d\'identités Impots.gouv et Ameli.</div><form data-persist="garlic" data-destroy="false" method="POST">' + inputs + '<hr/> <p>Si vous souhaitez appeler le FD bouchon DGFIP, vous pouvez aussi remplir les informations suivantes :</p>' + inputs_dgfip + '<div class="g-recaptcha" data-sitekey="6LfxVxwTAAAAAJ0F1mUqmpMMsB6N1nlR41OCIJ-C"></div><input class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;" type="submit"/></form>' + error + '</div></div></div></div></body>';
     res.send('<html>' + head + body + '</html>');
 });
 
@@ -204,6 +204,10 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
             res.redirect(req.path);
         }
         else {
+            if(req.body.birthcountry==='99100' && !req.body.birthplace){
+                req.session.error = 'Le lieu de naissance est obligatoire si le pays de naissance est la France (99100)';
+                return res.redirect(req.path);
+            }
             DGFIP_FIELDS.forEach(function(dgfip_field){
                 if (req.body[dgfip_field]===''){
                     delete req.body[dgfip_field];
