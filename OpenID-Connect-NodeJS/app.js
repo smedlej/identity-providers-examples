@@ -152,7 +152,7 @@ app.get('/user/create', function (req, res) {
             placeholder: 'exemple : 99100 pour la France'
         },
         birthplace: {
-            label: 'Code COG du lieu de naissance - à renseigner si le COG pays n\'est pas la France',
+            label: 'Code COG du lieu de naissance - à renseigner si le COG pays est la France (99100)',
             type: 'text',
             placeholder: 'exemple : 31555 pour Toulouse'
         },
