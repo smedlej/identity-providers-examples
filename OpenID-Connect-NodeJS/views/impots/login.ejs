@@ -25,6 +25,12 @@
 
             <h2 class="text-left">J'accède avec mon mot de passe</h2>
 
+            <% if(error) { %>
+            <div class="alert alert-danger" role="alert">
+                   <span class="sr-only">Error:</span>
+                   <%= error %>
+            </div>
+            <% } %>
             <div class="formulaire text-left">
                 <form method="POST">
                     <div class="form-group">
@@ -41,12 +47,6 @@
                            id="valider">
                     <br>
 
-                    <% if(error) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <span class="sr-only">Error:</span>
-                        <%= error %>
-                    </div>
-                    <% } %>
                 </form>
             </div>
         </div>
