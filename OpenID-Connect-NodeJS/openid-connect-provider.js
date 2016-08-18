@@ -372,10 +372,9 @@ OpenIDConnect.prototype.parseParams = function (req, res, spec) {
 OpenIDConnect.prototype.login = function (validateUser) {
     var self = this;
 
-    return [
-        self.use({policies: {loggedIn: false}, models: 'user'}),
+    return [self.use({policies: {loggedIn: false}, models: 'user'}),
         function (req, res, next) {
-            validateUser(req, function (error, user) {
+            validateUser(req, /*next:*/function (error, user) {
                 if (!error && !user) {
                     error = new Error('User not validated');
                 }
@@ -396,8 +395,7 @@ OpenIDConnect.prototype.login = function (validateUser) {
                     }
                     return next();
                 } else {
-                    req.session.error = error.message;
-                    return res.redirect(req.originalUrl);
+                    return next(error);
                 }
             });
         }];
