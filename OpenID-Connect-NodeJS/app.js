@@ -71,21 +71,16 @@ app.get('/my/login', function (req, res) {
     }
 });
 
-var validateUser = function (req, next) {
+var validateUser = function (req, callback) {
     delete req.session.error;
-    userLookup.validate(req, next);
+    userLookup.validate(req, callback);
 };
 
 var afterLogin = function (req, res) {
     res.redirect(req.param('return_url') || '/user');
 };
 
-var loginError = function (err, req, res) {
-    req.session.error = err.message;
-    res.redirect(req.originalUrl);
-};
-
-app.post('/my/login', oidc.login(validateUser), afterLogin, loginError);
+app.post('/my/login', oidc.login(validateUser), afterLogin);
 
 
 app.all('/logout', oidc.removetokens(), function (req, res) {
