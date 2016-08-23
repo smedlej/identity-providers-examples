@@ -51,7 +51,7 @@ var options = {
 };
 var oidc = require('./openid-connect-provider.js').oidc(options);
 
-var DGFIP_FIELDS = ['dgfip_rfr', 'dgfip_nbpac', 'dgfip_sitfam', 'dgfip_nbpart'];
+var DGFIP_FIELDS = ['dgfip_rfr', 'dgfip_nbpac', 'dgfip_sitfam', 'dgfip_nbpart', 'dgfip_aft'];
 
 app.set('port', process.env.PORT || 3042);
 app.use(logger('dev'));
@@ -175,7 +175,12 @@ app.get('/user/create', function (req, res) {
             label: 'Nombre de parts',
             type: 'number',
             placeholder: ''
-        }
+        },
+        dgfip_aft: {
+            label: 'Adresse fiscale de taxation',
+            type: 'text',
+            placeholder: 'n° de voie + libellé de la voie + complément d\'adresse + libellé de la commune + code postal + nom de la localité de destination'
+}
     };
     for (var i in fields) {
         if(i.indexOf('dgfip')===-1){

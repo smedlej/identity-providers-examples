@@ -71,6 +71,7 @@ var defaults = {
                 dgfip_nbpac : 'integer',
                 dgfip_sitfam : 'string',
                 dgfip_nbpart : 'float',
+                dgfip_aft : 'string',
                 samePassword: function (clearText) {
                     var sha256 = crypto.createHash('sha256');
                     sha256.update(clearText);
