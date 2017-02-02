@@ -141,6 +141,21 @@ app.get('/user/create', function (req, res) {
             type: 'email',
             placeholder: ''
         },
+        preferred_username: {
+            label: 'Nom d\'usage :',
+            type: 'text',
+            placeholder: 'exemple: Dupont'
+        },
+        address: {
+            label: 'Adresse postale :',
+            type: 'text',
+            placeholder: 'exemple: 1 Place de la République'
+        },
+        phone_number: {
+            label: 'Numéro de téléphone :',
+            type: 'number',
+            placeholder: 'exemple: 0101010101'
+        },
         birthcountry: {
             label: 'Code COG du pays de naissance :',
             type: 'text',

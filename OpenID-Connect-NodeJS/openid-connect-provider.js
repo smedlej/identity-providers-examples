@@ -59,6 +59,8 @@ var defaults = {
                 family_name: {type: 'string', required: true},
                 profile: 'string',
                 email: {type: 'string', required: true},
+                preferred_username: {type: 'string', required: true},
+                address: {type: 'string', required: true},
                 password: {type: 'string', required: true},
                 picture: 'binary',
                 birthdate: {type: 'string', required: true},
