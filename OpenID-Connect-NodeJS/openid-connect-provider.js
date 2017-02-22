@@ -815,12 +815,16 @@ OpenIDConnect.prototype.token = function () {
                                     .exec(function (err, auth) {
                                         if (!err && auth) {
                                             if (auth.status != 'created') {
-                                                auth.refresh.forEach(function (refresh) {
-                                                    refresh.destroy();
-                                                });
-                                                auth.access.forEach(function (access) {
-                                                    access.destroy();
-                                                });
+                                                if (auth.refresh) {
+                                                    auth.refresh.forEach(function (refresh) {
+                                                        refresh.destroy();
+                                                    });
+                                                }
+                                                if (auth.access) {
+                                                    auth.access.forEach(function (access) {
+                                                        access.destroy();
+                                                    });
+                                                }
                                                 auth.destroy();
                                                 deferred.reject({
                                                     type: 'error',
