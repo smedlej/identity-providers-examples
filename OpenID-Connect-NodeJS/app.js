@@ -200,7 +200,7 @@ app.get('/user/create', function (req, res) {
     for (var i in fields) {
         if(i.indexOf('dgfip')===-1){
             inputs += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + ' "placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"';
-            inputs += (i!== 'birthplace')? 'required="true"/></div>' : '/></div>';
+            inputs += (i!== 'birthplace' && i!== 'preferred_username' && i!== 'phone_number' && i!== 'address')? 'required="true"/></div>' : '/></div>';
         } else {
             inputs_dgfip += '<div class="form-group"><label for="' + i + '">' + fields[i].label + '</label><input class="form-control" type="' + fields[i].type + '"placeholder="' + fields[i].placeholder + '" id="' + i + '"  name="' + i + '"/></div>';
         }
