@@ -216,7 +216,6 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
 
     captchaHelper.getCpatchaValidationResponse(req, function(err, result){
         if(err || !result.success){
-            console.log(res.body);
             req.session.error = 'Erreur lors de la validation du captcha.';
             res.redirect(req.path);
         }
