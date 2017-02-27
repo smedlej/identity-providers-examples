@@ -52,6 +52,7 @@ var options = {
 var oidc = require('./openid-connect-provider.js').oidc(options);
 
 var DGFIP_FIELDS = ['dgfip_rfr', 'dgfip_nbpac', 'dgfip_sitfam', 'dgfip_nbpart', 'dgfip_aft'];
+var OPTIONAL_FIELDS = ['preferred_username', 'phone_number', 'address'];
 
 app.set('port', process.env.PORT || 3042);
 app.use(logger('dev'));
@@ -215,6 +216,7 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
 
     captchaHelper.getCpatchaValidationResponse(req, function(err, result){
         if(err || !result.success){
+            console.log(res.body);
             req.session.error = 'Erreur lors de la validation du captcha.';
             res.redirect(req.path);
         }
@@ -226,6 +228,11 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
             DGFIP_FIELDS.forEach(function(dgfip_field){
                 if (req.body[dgfip_field]===''){
                     delete req.body[dgfip_field];
+                }
+            });
+            OPTIONAL_FIELDS.forEach(function(optional_field){
+                if (req.body[optional_field]===''){
+                    delete req.body[optional_field];
                 }
             });
             req.model.user.findOne({identifier: req.body.identifier}, function (err, user) {
