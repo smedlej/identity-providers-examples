@@ -1032,7 +1032,9 @@ OpenIDConnect.prototype.token = function () {
                                                 if (prev.auth) {
                                                     prev.auth.status = 'used';
                                                     prev.auth.save(function(err) {
-                                                        console.error(err);
+                                                        if (err) {
+                                                            console.error(err);
+                                                        }
                                                     });
                                                 }
                                                 setTimeout(function () {
