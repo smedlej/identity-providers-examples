@@ -26,7 +26,13 @@ var mongoose = require('mongoose');
 mongoose.connect(configManager.getReplicationHosts(), configManager.getOptions());
 app.use(session({
     cookie: {path: '/', httpOnly: true, secure: false, maxAge: 5000},
-    store: new rs({mongoose_connection: mongoose.connection}),
+    store: new rs({
+        mongooseConnection: mongoose.connection,
+        collection: 'sessions',
+        stringify: false,
+        ttl: 1 * 60 * 60, // remove session in database after 1 hour
+        autoRemove: 'native' // default value. Remove session on server automatically
+    }),
     secret: 'Some Secret!!!'
 }));
 
