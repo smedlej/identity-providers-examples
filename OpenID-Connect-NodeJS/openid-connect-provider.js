@@ -295,6 +295,7 @@ OpenIDConnect.prototype.getOrm = function () {
 };
 
 OpenIDConnect.prototype.errorHandle = function (res, uri, error, desc) {
+    console.error(error, desc);
     if (uri) {
         var redirect = url.parse(uri, true);
         redirect.query.error = error; //'invalid_request';
@@ -842,6 +843,7 @@ OpenIDConnect.prototype.token = function () {
                                                 });
                                             }
                                         } else {
+                                            console.error(err);
                                             deferred.reject({
                                                 type: 'error',
                                                 error: 'invalid_grant',
@@ -912,6 +914,7 @@ OpenIDConnect.prototype.token = function () {
                                                 }
                                             });
                                     } else {
+                                        console.error(err);
                                         deferred.reject({
                                             type: 'error',
                                             error: 'invalid_grant',
@@ -978,6 +981,9 @@ OpenIDConnect.prototype.token = function () {
                         var createToken = function (model, cb) {
                             var token = crypto.createHash('md5').update(Math.random() + '').digest('hex');
                             model.findOne({token: token}, function (err, response) {
+                                if (err) {
+                                    console.error(err);
+                                }
                                 if (!response) {
                                     cb(token);
                                 } else {
@@ -993,6 +999,9 @@ OpenIDConnect.prototype.token = function () {
                                     auth: prev.auth ? prev.auth.id : null
                                 },
                                 function (err, refresh) {
+                                    if (err) {
+                                        console.error(err);
+                                    }
                                     setTimeout(function () {
                                         refresh.destroy();
                                         if (refresh.auth) {
@@ -1066,6 +1075,8 @@ OpenIDConnect.prototype.token = function () {
                                                     refresh_token: refresh.token,
                                                     id_token: access.idToken
                                                 });
+                                            } else {
+                                                console.error(err);
                                             }
                                         });
                                 });
