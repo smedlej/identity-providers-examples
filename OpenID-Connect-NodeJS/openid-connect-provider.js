@@ -1031,9 +1031,10 @@ OpenIDConnect.prototype.token = function () {
                                             if (!err && access) {
                                                 if (prev.auth) {
                                                     prev.auth.status = 'used';
-                                                    prev.auth.save();
+                                                    prev.auth.save(function(err) {
+                                                        console.error(err);
+                                                    });
                                                 }
-
                                                 setTimeout(function () {
                                                     access.destroy();
                                                     if (access.auth) {
