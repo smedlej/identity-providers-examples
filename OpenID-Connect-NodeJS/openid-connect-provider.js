@@ -815,7 +815,7 @@ OpenIDConnect.prototype.token = function () {
                                     .populate('client')
                                     .exec(function (err, auth) {
                                         if (!err && auth) {
-                                            if (auth.status != 'created') {
+                                            if (auth.status !== 'created') {
                                                 if (auth.refresh) {
                                                     auth.refresh.forEach(function (refresh) {
                                                         refresh.destroy();
@@ -830,7 +830,7 @@ OpenIDConnect.prototype.token = function () {
                                                 deferred.reject({
                                                     type: 'error',
                                                     error: 'invalid_grant',
-                                                    msg: 'Authorization code already used.'
+                                                    msg: ('Authorization code ' + params.code + '  already used. auth.status=' + auth.status)
                                                 });
                                             } else {
                                                 //obj.auth = a;
