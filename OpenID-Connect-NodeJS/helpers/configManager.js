@@ -44,4 +44,13 @@ Configuration.prototype.getRecaptchaSecret = function(){
     return this._rawConfig.recaptchaSecret;
 };
 
+var MODES = {
+    PARTICULIERS: 'particuliers',
+    AGENTS: 'agents'
+};
+
+Configuration.prototype.isModeAgents = function() {
+    return this._rawConfig.mode === MODES.AGENTS;
+};
+
 module.exports = Configuration;

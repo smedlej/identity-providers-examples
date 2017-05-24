@@ -1,5 +1,7 @@
 'use strict';
 
+var configManager = new (require('./configManager.js'))();
+
 var UserLookup = function () {
 };
 
@@ -32,6 +34,10 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             'birthcountry': true,
             'preferred_username': true
         };
+        if (configManager.isModeAgents()) {
+            pivotIdentityMembers.siren = true;
+            pivotIdentityMembers.email = true;
+        }
         if (req.check.scopes.indexOf('email') !== -1) {
 
             pivotIdentityMembers.email = true;
