@@ -13,6 +13,7 @@ var crypto = require('crypto'),
     methodOverride = require('method-override'),
     configManager = new (require('./helpers/configManager.js'))(),
     userLookup = new (require('./helpers/userLookup.js'))(),
+    accreditationHelper =  require('./helpers/accreditationHelper.js'),
     captchaHelper = require('./helpers/captchaHelper.js');
 
 var app = express();
@@ -95,7 +96,12 @@ app.all('/logout', oidc.removetokens(), function (req, res) {
     res.redirect('/my/login');
 });
 
-app.get('/user/authorize', oidc.auth());
+if (configManager.isAcrValuesActivated()) {
+    app.get('/user/authorize', accreditationHelper.saveClaims ,oidc.auth());
+} else {
+    app.get('/user/authorize', oidc.auth());
+}
+
 
 app.post('/user/token', oidc.token());
 

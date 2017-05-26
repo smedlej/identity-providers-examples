@@ -53,4 +53,12 @@ Configuration.prototype.isModeAgents = function() {
     return this._rawConfig.mode === MODES.AGENTS;
 };
 
+Configuration.prototype.getFeatures = function () {
+    return this._rawConfig.features || {};
+};
+
+Configuration.prototype.isAcrValuesActivated = function () {
+    return this.getFeatures().acr_values;
+};
+
 module.exports = Configuration;

@@ -567,7 +567,7 @@ OpenIDConnect.prototype.auth = function () {
                                         });
                                     };
                                     var setToken = function (token) {
-                                        req.model.auth.create({
+                                        var authModel = {
                                             client: req.session.client_id,
                                             scope: params.scope.split(' '),
                                             user: req.session.user,
@@ -577,7 +577,11 @@ OpenIDConnect.prototype.auth = function () {
                                             responseType: params.response_type,
                                             status: 'created',
                                             nonce: params.nonce
-                                        }).exec(function (err, auth) {
+                                        };
+                                        if (configManager.isAcrValuesActivated()) {
+                                            authModel.acr_values = req.session.acr_values ? req.session.acr_values.split(' ') : [];
+                                        }
+                                        req.model.auth.create(authModel).exec(function (err, auth) {
                                             if (!err && auth) {
                                                 setTimeout(function () {
                                                     req.model.auth.findOne({code: token}, function (err, auth) {
@@ -758,13 +762,18 @@ OpenIDConnect.prototype.token = function () {
         refresh_token: false,
         scope: false
     };
+    var modelsList = ['client', 'consent', 'auth', 'access', 'refresh'];
+    if (configManager.isAcrValuesActivated()) {
+        spec.client = false;
+        modelsList.push('claims');
+    }
 
     return [
         function (req, res, next) {
             self.endpointParams(spec, req, res, next)
         },
 
-        self.use({policies: {loggedIn: false}, models: ['client', 'consent', 'auth', 'access', 'refresh']}),
+        self.use({policies: {loggedIn: false}, models: modelsList}),
 
         function (req, res, next) {
             var params = req.parsedParams;
@@ -1026,16 +1035,20 @@ OpenIDConnect.prototype.token = function () {
                                         iat: d,
                                         nonce: prev.auth.nonce
                                     };
-                                    req.model.access.create({
-                                            token: access,
-                                            type: 'Bearer',
-                                            expiresIn: 3600,
-                                            user: prev.user || null,
-                                            client: prev.client.id,
-                                            idToken: jwt.encode(id_token, prev.client.secret),
-                                            scope: prev.scope,
-                                            auth: prev.auth ? prev.auth.id : null
-                                        },
+                                    var accessModel = {
+                                        token: access,
+                                        type: 'Bearer',
+                                        expiresIn: 3600,
+                                        user: prev.user || null,
+                                        client: prev.client.id,
+                                        idToken: jwt.encode(id_token, prev.client.secret),
+                                        scope: prev.scope,
+                                        auth: prev.auth ? prev.auth.id : null
+                                    };
+                                    if (configManager.isAcrValuesActivated()) {
+                                        accessModel.acr_values = prev.auth.acr_values;
+                                    }
+                                    req.model.access.create(accessModel,
                                         function (err, access) {
                                             if (!err && access) {
                                                 if (prev.auth) {
@@ -1191,9 +1204,13 @@ OpenIDConnect.prototype.check = function () {
 var userLookup = new (require('./helpers/userLookup.js'))();
 OpenIDConnect.prototype.userInfo = function () {
     var self = this;
+    var modelsList = ['user', 'access'];
+    if (configManager.isAcrValuesActivated()) {
+        modelsList.push('claims', 'client');
+    }
     return [
         self.check('openid', /profile|email/),
-        self.use({policies: {loggedIn: false}, models: ['user', 'access']}),
+        self.use({policies: {loggedIn: false}, models: modelsList}),
         function (req, res, next) {
             var access_token = req.headers['authorization'].split('Bearer ')[1];
             req.model.access.findOne({token: access_token})
@@ -1202,7 +1219,7 @@ OpenIDConnect.prototype.userInfo = function () {
                     var decryptedIdTokenBinary = new Buffer(idToken, 'base64');
                     var decryptedIdTokenString = decryptedIdTokenBinary.toString();
                     var decryptedIdTokenObject = JSON.parse(decryptedIdTokenString);
-                    userLookup.buildAndSendUserInfo(req, res, decryptedIdTokenObject);
+                    userLookup.buildAndSendUserInfo(req, res, decryptedIdTokenObject, access);
                 });
         }
     ];
