@@ -1,5 +1,12 @@
 'use strict';
-var config = require('../config/config.json');
+
+var configPath = '../config/config.json';
+if (process.env.name) {
+    configPath = '../config/config-' + process.env.name + '.json';
+}
+
+console.log('Loading configuration ' + configPath);
+var config = require(configPath);
 var _ = require('lodash');
 var Configuration = function(){};
 
