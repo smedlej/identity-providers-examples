@@ -23,10 +23,15 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+var sessionTimeInMilliseconds = 5 * 1000;
+if (configManager.isModeAgents()) {
+    sessionTimeInMilliseconds = 30 * 60 * 1000;
+}
+
 var mongoose = require('mongoose');
 mongoose.connect(configManager.getReplicationHosts(), configManager.getOptions());
 app.use(session({
-    cookie: {path: '/', httpOnly: true, secure: false, maxAge: 5000},
+    cookie: {path: '/', httpOnly: true, secure: false, maxAge: sessionTimeInMilliseconds},
     store: new rs({
         mongooseConnection: mongoose.connection,
         collection: 'sessions',
