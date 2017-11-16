@@ -60,7 +60,7 @@ var defaults = {
                 profile: 'string',
                 email: {type: 'string', required: true},
                 preferred_username: {type: 'string', required: false},
-                address: {type: 'string', required: false},
+                address: {type: 'object', required: false},
                 password: {type: 'string', required: true},
                 picture: 'binary',
                 birthdate: {type: 'string', required: true},
