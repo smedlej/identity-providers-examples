@@ -1,0 +1,15 @@
+{
+  "issuerURL":"https://fia1.vagrant.dev-franceconnect.fr/",
+  "identityProvider":"impots",
+  "mongo": {
+    "hosts": ["127.0.0.1"],
+    "port": 27017,
+    "db": "fia1"
+  },
+  "session": {
+    "secure": true
+  },
+  
+  "recaptchaSecret": "6LfxVxwTAAAAANaTjNdGPTJNBbPKnE-4zIo323x5",
+  "mode": "agents"
+}
