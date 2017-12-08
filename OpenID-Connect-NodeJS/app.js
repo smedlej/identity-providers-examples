@@ -261,23 +261,6 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                     res.redirect(req.path);
                 } else {
                     req.body.name = req.body.given_name + ' ' + req.body.family_name;
-
-                    /*
-                    ** object if we want a strict match later, here "formatted" is the only require :
-                    **  {
-                    **      "formatted" : "26 rue Desaix, 75015 Paris",
-                    **      "street_address" : "26 rue Desaix",
-                    **      "locality" : "Paris",
-                    **      "region" : "Ile-de-France",
-                    **      "postal_code" : "75015",
-                    **      "country" : "France"
-                    **  }
-                    */
-                    if (typeof req.body.address === 'string') {
-                        req.body.address = {
-                            formatted : req.body.address
-                        };
-                    }
                     req.model.user.create(req.body, function (err, user) {
                         if (err || !user) {
                             console.error(err);
