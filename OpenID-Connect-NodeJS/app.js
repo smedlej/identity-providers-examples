@@ -131,16 +131,12 @@ app.get('/user/create', function (req, res) {
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
 
-    // console.log(req.body);
-    // res.send('toto');
-    // return ;
-
     captchaHelper.getCpatchaValidationResponse(req, function(err, result){
-        // if(err || !result.success){
-        //     req.session.error = 'Erreur lors de la validation du captcha.';
-        //     res.redirect(req.path);
-        // }
-        // else {
+        if(err || !result.success){
+            req.session.error = 'Erreur lors de la validation du captcha.';
+            res.redirect(req.path);
+        }
+        else {
             if(req.body.birthcountry==='99100' && !req.body.birthplace){
                 req.session.error = 'Le lieu de naissance est obligatoire si le pays de naissance est la France (99100)';
                 return res.redirect(req.path);
@@ -195,7 +191,7 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                     });
                 }
             });
-        // }
+        }
 
     });
 });
