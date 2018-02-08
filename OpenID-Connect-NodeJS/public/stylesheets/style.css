@@ -14,6 +14,28 @@ hr {
     margin-right    : -25px;
 }
 
+.panel-heading {
+    cursor      : pointer;
+    text-align  : center;
+}
+
+.panel-title {
+    position : relative;
+}
+
+.panel-title > .show {
+    position    : absolute;
+    right       : 0;
+
+    font-size   : 13px;
+}
+
+.panel-body .form-group .glyphicon-question-sign {
+    color       : #01579B;
+    font-size   : 18px;
+    cursor      : pointer;
+}
+
 .form-control, .btn, .btn-large,
 .panel, .panel-default,
 .panel-heading, .panel-body {
@@ -58,6 +80,19 @@ hr {
     background-color    : #01579B;
     color               : #FFFFFF;
     font-weight         : bold;
+}
+
+img.logo-fc {
+    position    : absolute;
+    right       : 30px;
+    height      : 50px;
+}
+
+@media (max-width: 615px) {
+    img.logo-fc {
+        position        : inherit;
+        margin-bottom   : 10px;
+    }
 }
 
 @media only all and (min-width: 1000px) {
