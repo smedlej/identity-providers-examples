@@ -116,7 +116,7 @@
                                         <label for="dgfip_aft">
                                             Adresse fiscale de taxation
                                         </label>
-                                        <input class="form-control" type="text" placeholder="n° de voie + libellé de la voie + complément d'adresse + libellé de la commune + code postal + nom de la localité de destination" id="dgfip_aft"  name="dgfip_aft"/>
+                                        <input class="form-control" type="text" placeholder="n° de voie + libellé de la voie + complément d'adresse + libellé de la commune + code postal + nom de la localité de destination" id="dgfip_aft" name="dgfip_aft"/>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                                             Situation familiale
                                             <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Correspond à la situation du (des) déclarant(s) du foyer fiscal : M : Marié(e) / C : Célibataire / D : Divorcé(e) / V : Veuf(ve) / O : Pacsé(e)"></span>
                                         </label>
-                                        <select class="form-control" id="dgfip_sitfam"  name="dgfip_sitfam">
+                                        <select class="form-control" id="dgfip_sitfam" name="dgfip_sitfam">
                                             <option value="M" selected>Marié(e)</option>
                                             <option value="C">Célibataire</option>
                                             <option value="D">Divorcé(e)</option>
@@ -150,35 +150,35 @@
                                             Nombre de personnes à charge
                                             <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Le nombre de personnes à charge correspond à la somme : enfants à charge + enfants à charge en garde alternée + personnes invalides à charge + enfants majeurs célibataires + enfants majeurs mariés ou chargés de famille + petits enfants en garde alternée"></span>
                                         </label>
-                                        <input class="form-control" type="number" placeholder="" id="dgfip_nbpac" name="dgfip_nbpac"/>
+                                        <input class="form-control" type="number" placeholder="" id="dgfip_nbpac" name="dgfip_nbpac" min="0" max="9999999999"/>
                                     </div>
 
                                     <!-- HERE WE NEED TO ADD COMPATIBILITY ON SERVER -->
                                     <div class="sub-form">
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Enfant(s) mineur(s) en garde exclusive</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacf"  name="dgfip_nbpacf"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacf" name="dgfip_nbpacf" min="0" max="9999999999"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Enfant(s) mineur(s) en résidence alternée</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpach"  name="dgfip_nbpach"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpach" name="dgfip_nbpach" min="0" max="9999999999"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Personne(s) à charge invalide</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacr"  name="dgfip_nbpacr"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacr" name="dgfip_nbpacr" min="0" max="9999999999"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Enfant(s) majeur(s) à charge célibataire</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacj"  name="dgfip_nbpacj"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacj" name="dgfip_nbpacj" min="0" max="9999999999"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Petit(s)-enfant(s) en résidence alternée</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacp"  name="dgfip_nbpacp"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacp" name="dgfip_nbpacp" min="0" max="9999999999"/>
                                         </div>
                                         <div class="form-group">
                                             <label for="dgfip_nbpac">Enfant(s) majeur(s) marié(s)/pacs »(s) avec ou
                                                 sans charge de famille</label>
-                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacn"  name="dgfip_nbpacn"/>
+                                            <input class="form-control" type="number" placeholder="" id="dgfip_nbpacn" name="dgfip_nbpacn" min="0" max="9999999999"/>
                                         </div>
                                     </div>
                                     <!-- !HERE WE NEED TO ADD COMPATIBILITY ON SERVER -->
