@@ -1036,7 +1036,7 @@ OpenIDConnect.prototype.token = function () {
                                         iss: configManager.getIssuerURL(),
                                         sub: prev.sub || prev.user || null,
                                         aud: prev.client.key,
-                                        exp: d + 3600,
+                                        exp: d + 60,
                                         acr: 'eidas2',
                                         iat: d,
                                         nonce: prev.auth.nonce
@@ -1044,7 +1044,7 @@ OpenIDConnect.prototype.token = function () {
                                     var accessModel = {
                                         token: access,
                                         type: 'Bearer',
-                                        expiresIn: 3600,
+                                        expiresIn: 60,
                                         user: prev.user || null,
                                         client: prev.client.id,
                                         idToken: jwt.encode(id_token, prev.client.secret),
@@ -1085,7 +1085,7 @@ OpenIDConnect.prototype.token = function () {
                                                                 }
                                                             });
                                                     }
-                                                }, 1000 * 3600); //1 hour
+                                                }, 1000 * 60); //1 minute
 
                                                 res.json({
                                                     access_token: access.token,
