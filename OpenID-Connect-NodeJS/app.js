@@ -125,7 +125,7 @@ app.get('/user/consent', function (req, res) {
 app.post('/user/consent', oidc.consent());
 
 app.get('/user/create', function (req, res) {
-    res.render('impots/user/create');
+  res.render('impots/user/create', { session: req.session });
 });
 
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
@@ -184,9 +184,10 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                             req.session.error = 'Erreur lors de la création du compte.';
                             res.redirect(req.path);
                         } else {
-                            req.session.user = user.id;
-                            req.session.error = 'Compte créé avec succès.';
-                            res.redirect('/user/create');
+                          req.session.user = user.id;
+                          req.session.success = "Votre compte a bien été créé."
+                          res.redirect('/user/create');
+
                         }
                     });
                 }
