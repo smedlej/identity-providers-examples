@@ -11,7 +11,16 @@
             <div class="panel-heading" style="padding-top: 15px; padding-bottom: 15px;">
                 <img class="logo-fc" src="/images/fc_logo_alt2_v2.png">
                 <h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur <br/>en environnement d'intégration</h1>
-            </div>
+              </div>
+              <% if (locals.session && locals.session.success) { %>
+                <div class="alert alert-success">
+                  <strong><%= session.success %></strong>
+                </div>
+                <% } else if (locals.session && locals.session.error) { %>
+                  <div class="alert alert-warning" role="alert">
+                    <strong><%= session.error %></strong>
+                  </div>
+                  <% } %>
             <div class="panel-body" style="padding: 25px;">
                 <div class="alert alert-warning text-center" style="margin-bottom: 25px;"><strong>Tous les champs sont obligatoires (sauf précisé).</strong> Les comptes seront disponibles dans les 2 bouchons de fournisseurs d'identités Impots.gouv et Ameli.</div>
                 <form data-persist="garlic" data-destroy="false" method="POST">
