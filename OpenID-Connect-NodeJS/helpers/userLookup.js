@@ -36,10 +36,12 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
             'birthcountry': true,
             'preferred_username': true
         };
+
         if (configManager.isModeAgents()) {
             pivotIdentityMembers.siren = true;
             pivotIdentityMembers.email = true;
         }
+
         if (req.check.scopes.indexOf('email') !== -1) {
 
             pivotIdentityMembers.email = true;
@@ -82,7 +84,7 @@ function buildAndSetPivotIdentity(res, user, pivotIdentityMembers) {
             pivotIdentity[member] = user[member];
         }
     }
-    console.log(pivotIdentity);
+
     if (configManager.isModeAgents() || pivotIdentity.given_name) {
         res.json(pivotIdentity);
     } else {
