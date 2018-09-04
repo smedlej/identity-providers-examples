@@ -13,7 +13,7 @@ var crypto = require('crypto'),
     methodOverride = require('method-override'),
     configManager = new (require('./helpers/configManager.js'))(),
     userLookup = new (require('./helpers/userLookup.js'))(),
-    accreditationHelper =  require('./helpers/accreditationHelper.js'),
+    accreditationHelper = require('./helpers/accreditationHelper.js'),
     captchaHelper = require('./helpers/captchaHelper.js');
 
 var app = express();
@@ -24,6 +24,10 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 var sessionTimeInMilliseconds = 5 * 1000;
+
+if (configManager.isModeAgents()) {
+    sessionTimeInMilliseconds = 30 * 60 * 1000;
+}
 
 var mongoose = require('mongoose');
 mongoose.connect(configManager.getReplicationHosts(), configManager.getOptions());
@@ -60,7 +64,6 @@ var options = {
 };
 var oidc = require('./openid-connect-provider.js').oidc(options);
 
-var DGFIP_FIELDS = ['dgfip_rfr', 'dgfip_nbpac', 'dgfip_sitfam', 'dgfip_nbpart', 'dgfip_aft', 'dgfip_nbpacf', 'dgfip_nbpach', 'dgfip_nbpacr', 'dgfip_nbpacj', 'dgfip_nbpacp', 'dgfip_nbpacn'];
 var OPTIONAL_FIELDS = ['preferred_username', 'phone_number', 'address'];
 
 app.set('port', process.env.PORT || 3042);
@@ -99,7 +102,7 @@ app.all('/logout', oidc.removetokens(), function (req, res) {
 });
 
 if (configManager.isAcrValuesActivated()) {
-    app.get('/user/authorize', accreditationHelper.saveClaims ,oidc.auth());
+    app.get('/user/authorize', accreditationHelper.saveClaims, oidc.auth());
 } else {
     app.get('/user/authorize', oidc.auth());
 }
@@ -122,29 +125,25 @@ app.get('/user/consent', function (req, res) {
 app.post('/user/consent', oidc.consent());
 
 app.get('/user/create', function (req, res) {
-  res.render('impots/user/create', { session: req.session });
+    res.render('impots/user/create', {session: req.session});
 });
 
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
 
-    captchaHelper.getCpatchaValidationResponse(req, function(err, result){
-        if(err || !result.success){
+    captchaHelper.getCpatchaValidationResponse(req, function (err, result) {
+        if (err || !result.success) {
             req.session.error = 'Erreur lors de la validation du captcha.';
             res.redirect(req.path);
         }
         else {
-            if(req.body.birthcountry==='99100' && !req.body.birthplace){
+            if (req.body.birthcountry === '99100' && !req.body.birthplace) {
                 req.session.error = 'Le lieu de naissance est obligatoire si le pays de naissance est la France (99100)';
                 return res.redirect(req.path);
             }
-            DGFIP_FIELDS.forEach(function(dgfip_field){
-                if (req.body[dgfip_field]===''){
-                    delete req.body[dgfip_field];
-                }
-            });
-            OPTIONAL_FIELDS.forEach(function(optional_field){
-                if (req.body[optional_field]===''){
+
+            OPTIONAL_FIELDS.forEach(function (optional_field) {
+                if (req.body[optional_field] === '') {
                     delete req.body[optional_field];
                 }
             });
@@ -172,7 +171,7 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                     */
                     if (typeof req.body.address === 'string') {
                         req.body.address = {
-                            formatted : req.body.address
+                            formatted: req.body.address
                         };
                     }
                     req.model.user.create(req.body, function (err, user) {
@@ -181,9 +180,9 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                             req.session.error = 'Erreur lors de la création du compte.';
                             res.redirect(req.path);
                         } else {
-                          req.session.user = user.id;
-                          req.session.success = "Votre compte a bien été créé."
-                          res.redirect('/user/create');
+                            req.session.user = user.id;
+                            req.session.success = "Votre compte a bien été créé."
+                            res.redirect('/user/create');
 
                         }
                     });

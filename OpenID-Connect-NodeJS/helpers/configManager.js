@@ -56,6 +56,10 @@ var MODES = {
     AGENTS: 'agents'
 };
 
+Configuration.prototype.isModeAgents = function() {
+    return this._rawConfig.mode === MODES.AGENTS;
+};
+
 Configuration.prototype.getFeatures = function () {
     return this._rawConfig.features || {};
 };
