@@ -31,7 +31,7 @@ var defaults = {
                 next();
             } else {
                 var q = req.parsedParams ? req.path + '?' + querystring.stringify(req.parsedParams) : req.originalUrl;
-                res.redirect(this.settings.login_url + '?' + querystring.stringify({return_url: q}));
+                res.redirect(this.settings.logn_url + '?' + querystring.stringify({return_url: q}));
             }
         }
     },
@@ -1208,6 +1208,7 @@ OpenIDConnect.prototype.check = function () {
  * This function returns the user info in a json object. Checks for scope and login are included.
  */
 var userLookup = new (require('./helpers/userLookup.js'))();
+
 OpenIDConnect.prototype.userInfo = function () {
     var self = this;
     var modelsList = ['user', 'access'];
