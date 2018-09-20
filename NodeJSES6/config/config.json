@@ -1,0 +1,9 @@
+{
+  "client_id": "9c771146e9ff7f45a7613ced4be01581b3abbd8e25d45fb3e45559b2577c5030",
+  "client_secret": "3eb1c3fdd79669e3e4a5971ea0ac06804f27f6cbb20f29daebda95e755677ecb",
+  "grant_types": ["refresh_token", "authorization_code"],
+  "response_types_supported": ["code id_token token"],
+  "redirect_uris": ["http://localhost:3041/oidc_callback"],
+  "token_endpoint_auth_method": "client_secret_post",
+  "post_logout_redirect_uris": ["http://localhost:3041/logged-out"]
+}
