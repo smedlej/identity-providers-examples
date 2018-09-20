@@ -31,7 +31,7 @@ var defaults = {
                 next();
             } else {
                 var q = req.parsedParams ? req.path + '?' + querystring.stringify(req.parsedParams) : req.originalUrl;
-                res.redirect(this.settings.logn_url + '?' + querystring.stringify({return_url: q}));
+                res.redirect(this.settings.login_url + '?' + querystring.stringify({return_url: q}));
             }
         }
     },
