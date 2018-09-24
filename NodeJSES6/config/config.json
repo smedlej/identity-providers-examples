@@ -1,6 +1,6 @@
 {
-  "client_id": "9c771146e9ff7f45a7613ced4be01581b3abbd8e25d45fb3e45559b2577c5030",
-  "client_secret": "3eb1c3fdd79669e3e4a5971ea0ac06804f27f6cbb20f29daebda95e755677ecb",
+  "client_id": "09a1a257648c1742c74d6a3d84b31943",
+  "client_secret": "7ae4fef2aab63fb78d777fe657b7536f",
   "grant_types": ["refresh_token", "authorization_code"],
   "response_types_supported": ["code id_token token"],
   "redirect_uris": ["http://localhost:3041/oidc_callback"],
