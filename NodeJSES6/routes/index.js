@@ -64,8 +64,11 @@ module.exports = (app, provider) => {
       Account
         .authenticate(req.body.login, req.body.password)
         .then(async (data) => {
-          console.log(data)
           if (data === null) {
+            const error = {message: 'Invalid credentiales'}
+            res.render('index', {details, client, title: 'Sign-In', error});
+          }
+          if (data === undefined) {
             let error = {message: 'Invalid credentiales'}
             res.render('index', {details, client, title: 'Sign-In', error: error});
           }
@@ -85,7 +88,7 @@ module.exports = (app, provider) => {
           await provider.interactionFinished(req, res, result)
         }).catch((err) => {
           throw err;
-      })
+        });
     } catch (err) {
       next(err)
     }

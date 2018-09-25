@@ -1,7 +1,6 @@
 import database from './database';
 import { findKey } from 'lodash';
 import assert from 'assert';
-import crypto from 'crypto';
 
 const store = new Map();
 const logins = new Map();
@@ -16,7 +15,6 @@ function checkCredentials(formData, dbData){
   } else {
     result = false;
   }
-  console.log(result)
   return result;
 }
 
@@ -73,8 +71,9 @@ class Account {
     // token is a reference to the token used for which a given account is being loaded,
     //   it is undefined in scenarios where account claims are returned from authorization endpoint
     // ctx is the koa request context
-    console.log('findById',id)
-   if (!store.get(id)) new Account(id); // eslint-disable-line no-new
+    if (!store.get(id)) {
+     new Account(id); // eslint-disable-line no-new
+    }
     return store.get(id);
   }
 
@@ -88,19 +87,17 @@ class Account {
       identifiant: login,
     }).then((result) => {
       if (result[0]) {
-        console.log('result log login',checkCredentials(login, result[0].identifiant))
-        console.log('result log password',checkCredentials(password, result[0].password))
         if (checkCredentials(login, result[0].identifiant)) {
           //if (checkCredentials(password, result[0].password)){
             id = result[0].$oid
-            output = result
+            output = result;
           //}
         }
       } else {
-       output = null
+       output = null;
       }
     }).catch((err) => {
-      throw err
+      throw err;
     })
     return output;
   }
