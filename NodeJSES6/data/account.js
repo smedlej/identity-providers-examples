@@ -33,31 +33,33 @@ class Account {
    *   or not return them in id tokens but only userinfo and so on.
    */
   async claims(use, scope) { // eslint-disable-line no-unused-vars
-    return {
-      sub: this.accountId, // it is essential to always return a sub claim
+    if (user !== null) {
+      return {
+        sub: this.accountId, // it is essential to always return a sub claim
 
-      address: {
-        country: user[0].codePaysDeNaissance,
-        formatted: user[0].adresseFormatee,
-        locality: '000',
-        postal_code: '000',
-        region: '000',
-        street_address: user[0].adresseFormatee,
-      },
-      birthdate: `${user[0].AAAA}-${user[0].MM}-${user[0].JJ}`,
-      birthcountry: user[0].birthcountry,
-      email: user[0].email,
-      family_name: user[0].nomDeNaissance,
-      gender: user[0].Gender,
-      given_name: user[0].prenom,
-      middle_name: user[0].secondPrenom,
-      name: `${user[0].nomDeNaissance} ${user[0].prenom}`,
-      nickname: 'Johny',
-      phone_number: user[0].telephone,
-      preferred_username: `${user[0].prenom}${user[0].nomDeNaissance}`,
-      updated_at: user[0].updatedAt,
-      siret: user[0].siret
-    };
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          locality: '000',
+          postal_code: '000',
+          region: '000',
+          street_address: user[0].adresseFormatee,
+        },
+        birthdate: `${user[0].AAAA}-${user[0].MM}-${user[0].JJ}`,
+        birthcountry: user[0].birthcountry,
+        email: user[0].email,
+        family_name: user[0].nomDeNaissance,
+        gender: user[0].Gender,
+        given_name: user[0].prenom,
+        middle_name: user[0].secondPrenom,
+        name: `${user[0].nomDeNaissance} ${user[0].prenom}`,
+        nickname: 'Johny',
+        phone_number: user[0].telephone,
+        preferred_username: `${user[0].prenom}${user[0].nomDeNaissance}`,
+        updated_at: user[0].updatedAt,
+        siret: user[0].siret
+      };
+    }
   }
 
   static async findByLogin(login) {
