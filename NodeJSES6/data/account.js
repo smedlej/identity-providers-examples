@@ -8,6 +8,10 @@ const uuid = require('uuid/v4');
 
 let user = null;
 
+function setUserData(dbData) {
+  user = dbData;
+}
+
 function checkCredentials(formData, dbData){
   let result;
   if (formData === dbData) {
@@ -17,7 +21,6 @@ function checkCredentials(formData, dbData){
   }
   return result;
 }
-
 
 class Account {
   constructor(id) {
@@ -74,7 +77,7 @@ class Account {
     //   it is undefined in scenarios where account claims are returned from authorization endpoint
     // ctx is the koa request context
     if (!store.get(id)) {
-     new Account(id); // eslint-disable-line no-new
+      new Account(id); // eslint-disable-line no-new
     }
     return store.get(id);
   }
@@ -90,13 +93,12 @@ class Account {
     }).then((result) => {
       if (result[0]) {
         if (checkCredentials(login, result[0].identifiant)) {
-          //if (checkCredentials(password, result[0].password)){
-            id = result[0].$oid
-            output = result;
-          //}
+          id = result[0].$oid
+          output = result;
+          setUserData(result);
         }
       } else {
-       output = null;
+        output = null;
       }
     }).catch((err) => {
       throw err;
