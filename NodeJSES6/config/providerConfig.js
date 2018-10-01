@@ -8,11 +8,13 @@ module.exports.provider = {
   claims: {
     address: ['address'],
     family_name: ['family_name'],
+    email: ['email'],
     given_name: ['given_name'],
     preferred_username: ['preferred_username'],
     gender: ['gender'],
     birthdate: ['birthdate'],
-    profile: ['family_name', 'gender', 'given_name', 'preferred_username', 'birthdate', 'birthcountry', 'birthplace'],
+    birthcountry: ['birthcountry'],
+    profile: ['family_name', 'gender', 'given_name', 'preferred_username', 'email', 'birthdate', 'birthcountry', 'birthplace'],
   },
   grant_types_supported: ['authorization_code'],
   features: {
