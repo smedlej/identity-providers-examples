@@ -7,7 +7,6 @@ import { set } from 'lodash';
 import helmet from 'helmet';
 import Provider from 'oidc-provider';
 import Account from'./data/account';
-import RedisAdapter from './adapter/RedisAdapter';
 
 const { provider: providerConfiguration, clients } = require('./config/providerConfig');
 
@@ -40,7 +39,6 @@ let server;
 
 (async () => {
   await provider.initialize({
-    adapter: RedisAdapter,
     clients,
   });
 
