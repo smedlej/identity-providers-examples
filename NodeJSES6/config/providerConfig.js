@@ -14,7 +14,8 @@ module.exports.provider = {
     gender: ['gender'],
     birthdate: ['birthdate'],
     birthcountry: ['birthcountry'],
-    profile: ['family_name', 'gender', 'given_name', 'preferred_username', 'email', 'birthdate', 'birthcountry', 'birthplace'],
+    birthdepartment: ['birthdepartment'],
+    profile: ['family_name', 'gender', 'given_name', 'preferred_username', 'email', 'birthdate', 'birthcountry', 'birthplace', 'birthdepartment'],
   },
   grant_types_supported: ['authorization_code'],
   features: {
