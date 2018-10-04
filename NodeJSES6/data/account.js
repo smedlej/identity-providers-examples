@@ -51,6 +51,7 @@ class Account {
         birthdate: `${user[0].birthdate}`,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].departementDeNaissance,
+        birthdepartement: user[0].departementDeNaissance,
         email: user[0].email,
         family_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
