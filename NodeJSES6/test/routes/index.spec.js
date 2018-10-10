@@ -12,7 +12,7 @@ const { expect } = chai;
 const { done } = chai;
 
 
-/*
+
 describe('routes/index', () => {
   it('should get a status 404 if "/" is call', (done) => {
     chai.request('http://localhost:4000')
@@ -53,4 +53,4 @@ describe('routes/index', () => {
       })
   });
 })
-*/
+
