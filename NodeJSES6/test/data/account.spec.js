@@ -2,9 +2,7 @@
 import chai from 'chai';
 import assert from 'assert'
 import chaiHttp from 'chai-http';
-import simpleMock from 'simple-mock';
 import account from '../../data/account';
-import config from '../../config/config.json';
 
 chai.use(chaiHttp);
 const { expect } = chai;
