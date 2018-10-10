@@ -39,7 +39,7 @@ class Account {
    */
   async claims(use, scope) { // eslint-disable-line no-unused-vars
     if (user !== null) {
-      return userDataCheck.checkMandatoryData(user[0]);
+      return userDataCheck.checkMandatoryData(user);
     }
   }
 
