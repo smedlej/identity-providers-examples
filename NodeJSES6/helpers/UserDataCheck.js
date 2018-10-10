@@ -117,7 +117,7 @@ class UserDataCheck {
       user[0].Gender === ''
       || user[0].Gender === undefined
       || user[0].Gender === null
-      || user[0].Gender !== 'string'
+      || typeof user[0].Gender !== 'string'
     ){
       return {
         address: {
