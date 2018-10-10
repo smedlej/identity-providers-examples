@@ -52,8 +52,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -127,8 +125,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -202,8 +198,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -277,8 +271,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -354,8 +346,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -429,8 +419,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -504,8 +492,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -579,8 +565,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -656,8 +640,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -731,8 +713,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -806,8 +786,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -881,8 +859,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -958,8 +934,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1033,8 +1007,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1108,8 +1080,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1183,8 +1153,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1260,8 +1228,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1335,8 +1301,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1410,8 +1374,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -1485,8 +1447,6 @@ describe.only('helpers/UserDataCheck', () => {
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
       const expected = {
-        sub: undefined, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,

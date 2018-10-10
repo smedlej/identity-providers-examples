@@ -39,7 +39,8 @@ class Account {
    */
   async claims(use, scope) { // eslint-disable-line no-unused-vars
     if (user !== null) {
-      return userDataCheck.checkMandatoryData(user);
+      const checkedUser = userDataCheck.checkMandatoryData(user);
+      return {sub: this.accountId, ...checkedUser};
     }
   }
 
