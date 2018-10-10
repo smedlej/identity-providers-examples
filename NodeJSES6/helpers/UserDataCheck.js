@@ -8,8 +8,6 @@ class UserDataCheck {
       || typeof user[0].nomDeNaissance !== 'string'
     ) {
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -38,8 +36,6 @@ class UserDataCheck {
       || typeof user[0].prenom !== 'string'
     ) {
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -68,8 +64,6 @@ class UserDataCheck {
       || typeof user[0].birthdate !== 'string'
     ) {
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -98,8 +92,6 @@ class UserDataCheck {
       || typeof user[0].departementDeNaissance !== 'string'
     ) {
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -128,8 +120,6 @@ class UserDataCheck {
       || user[0].Gender !== 'string'
     ){
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -153,8 +143,6 @@ class UserDataCheck {
     }
     else {
       return {
-        sub: this.accountId, // it is essential to always return a sub claim
-
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
