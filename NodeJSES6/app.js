@@ -3,21 +3,18 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import { set } from 'lodash';
 import helmet from 'helmet';
 import Provider from 'oidc-provider';
-import Account from'./data/account';
-import RedisAdapter from './adapter/RedisAdapter';
+import Account from './data/account';
 
 const { provider: providerConfiguration, clients } = require('./config/providerConfig');
 
 const { PORT = 4000, ISSUER = `http://localhost:${PORT}` } = process.env;
-providerConfiguration.findById = Account.findById;
 const indexRouter = require('./routes/index');
 
 const app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -31,6 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Create new Provider
 const provider = new Provider(ISSUER, providerConfiguration);
 
+// Set the provider findById method.
+providerConfiguration.findById = Account.findById;
 /**
  * Get port from environment and store in Express.
  */
@@ -40,7 +39,6 @@ let server;
 
 (async () => {
   await provider.initialize({
-    adapter: RedisAdapter,
     clients,
   });
 
@@ -48,9 +46,8 @@ let server;
   app.use(provider.callback);
 
   server = app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
-    console.info(`\x1b[32mServer listening on http://localhost:${PORT}\x1b[0m`);
-    console.info(`application is listening on port ${PORT}, check it's /.well-known/openid-configuration`);
+    // eslint-disable no-console
+    console.info(`\x1b[32mServer listening on http://localhost:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
   });
 })().catch((err) => {
   if (server && server.listening) server.close();

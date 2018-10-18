@@ -1,8 +1,0 @@
-{
-  "client_id": "09a1a257648c1742c74d6a3d84b31943",
-  "client_secret": "7ae4fef2aab63fb78d777fe657b7536f",
-  "grant_types": ["refresh_token", "authorization_code"],
-  "response_types_supported": ["code id_token token"],
-  "redirect_uris": ["https://fcp.integ01.dev-franceconnect.fr/api/v1/oidc_callback"],
-  "token_endpoint_auth_method": "client_secret_post",
-}
