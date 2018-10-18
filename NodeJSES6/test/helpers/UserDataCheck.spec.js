@@ -298,7 +298,7 @@ describe.only('helpers/UserDataCheck', () => {
       // Assert
       assert.deepEqual(expected, results);
     });
-  })
+  });
 
   describe('given_name', () => {
     it('should not be return if user.prenom is empty', () => {
@@ -418,6 +418,7 @@ describe.only('helpers/UserDataCheck', () => {
         createdAt: '2018-07-05T00:00:00.000Z',
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
+
       const expected = {
         address: {
           country: user[0].codePaysDeNaissance,
@@ -491,6 +492,7 @@ describe.only('helpers/UserDataCheck', () => {
         createdAt: '2018-07-05T00:00:00.000Z',
         updatedAt: '2018-07-05T00:00:00.000Z',
       }];
+
       const expected = {
         address: {
           country: user[0].codePaysDeNaissance,
@@ -592,7 +594,7 @@ describe.only('helpers/UserDataCheck', () => {
       // Assert
       assert.deepEqual(expected, results);
     });
-  })
+  });
 
   describe('birthdate', () => {
     it('should not be return if user.birthdate is empty', () => {
@@ -886,7 +888,7 @@ describe.only('helpers/UserDataCheck', () => {
       // Assert
       assert.deepEqual(expected, results);
     });
-  })
+  });
 
   describe('gender', () => {
     it('should not be return if user.Gender is empty', () => {
@@ -1180,7 +1182,7 @@ describe.only('helpers/UserDataCheck', () => {
       // Assert
       assert.deepEqual(expected, results);
     });
-  })
+  });
 
   describe('birthplace', () => {
     it('should should not be return if user.departementDeNaissance is empty', () => {
@@ -1474,5 +1476,5 @@ describe.only('helpers/UserDataCheck', () => {
       // Assert
       assert.deepEqual(expected, results);
     });
-  })
+  });
 });

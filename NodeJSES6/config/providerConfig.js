@@ -1,4 +1,5 @@
 import config from './config.json';
+
 module.exports.provider = {
   cookies: {
     long: { signed: true, maxAge: (1 * 24 * 60 * 60) * 1000 }, // 1 day in ms
@@ -59,4 +60,4 @@ module.exports.provider = {
   },
 };
 
-module.exports.clients = [{...config}];
+module.exports.clients = [{ ...config }];

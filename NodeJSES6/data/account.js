@@ -1,6 +1,5 @@
-import database from './database';
-import { findKey } from 'lodash';
 import assert from 'assert';
+import database from './database';
 import UserDataCheck from '../helpers/UserDataCheck';
 
 const store = new Map();
@@ -14,7 +13,7 @@ function setUserData(dbData) {
   user = dbData;
 }
 
-function checkCredentials(formData, dbData){
+function checkCredentials(formData, dbData) {
   let result;
   if (formData === dbData) {
     result = true;
@@ -29,6 +28,7 @@ class Account {
     this.accountId = id || uuid();
     store.set(this.accountId, this);
   }
+
   /**
    * @param use - can either be "id_token" or "userinfo", depending on
    *   where the specific claims are intended to be put in.
@@ -40,8 +40,9 @@ class Account {
   async claims(use, scope) { // eslint-disable-line no-unused-vars
     if (user !== null) {
       const checkedUser = userDataCheck.checkMandatoryData(user);
-      return {sub: this.accountId, ...checkedUser};
+      return { sub: this.accountId, ...checkedUser };
     }
+    return null;
   }
 
   static async findByLogin(login) {
@@ -62,17 +63,14 @@ class Account {
   }
 
   static async authenticate(login, password) {
-    let id = null;
     let output;
     assert(login, 'identifiant must be provided');
     assert(password, 'password must be provided');
-
     await database.connection.find({
       identifiant: login,
     }).then((result) => {
       if (result[0]) {
         if (checkCredentials(login, result[0].identifiant)) {
-          id = result[0].$oid
           output = result;
           setUserData(result);
         }
@@ -81,7 +79,7 @@ class Account {
       }
     }).catch((err) => {
       throw err;
-    })
+    });
     return output;
   }
 }
