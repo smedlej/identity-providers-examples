@@ -1,13 +1,13 @@
 import querystring from 'querystring';
 
-import {urlencoded} from 'express'; // eslint-disable-line import/no-unresolved
+import { urlencoded } from 'express'; // eslint-disable-line import/no-unresolved
 
 import Account from '../data/account';
 
-const body = urlencoded({extended: false});
+const body = urlencoded({ extended: false });
 
 module.exports = (app, provider) => {
-  const {constructor: {errors: {SessionNotFound}}} = provider;
+  const { constructor: { errors: { SessionNotFound } } } = provider;
 
   function setNoCache(req, res, next) {
     res.set('Pragma', 'no-cache');
@@ -16,7 +16,7 @@ module.exports = (app, provider) => {
   }
 
   app.get('/interaction/:grant', setNoCache, async (req, res, next) => {
-    let error = {message: ''}
+    const error = { message: '' };
 
     try {
       const details = await provider.interactionDetails(req);
@@ -42,9 +42,8 @@ module.exports = (app, provider) => {
         details,
         title: 'Authorize',
         params: querystring.stringify(details.params, ',<br/>', ' = ', {
-          encodeURIComponent: value => {
-            console.log(value)
-            value
+          encodeURIComponent: (value) => {
+            value;
           },
         }),
         interaction: querystring.stringify(details.interaction, ',<br/>', ' = ', {
@@ -65,12 +64,16 @@ module.exports = (app, provider) => {
         .authenticate(req.body.login, req.body.password)
         .then(async (data) => {
           if (data === null) {
-            const error = {message: 'Invalid credentiales'}
-            res.render('index', {details, client, title: 'Sign-In', error});
+            const error = { message: 'Invalid credentiales' };
+            res.render('index', {
+              details, client, title: 'Sign-In', error,
+            });
           }
           if (data === undefined) {
-            let error = {message: 'Invalid credentiales'}
-            res.render('index', {details, client, title: 'Sign-In', error: error});
+            const error = { message: 'Invalid credentiales' };
+            res.render('index', {
+              details, client, title: 'Sign-In', error,
+            });
           }
           const account = await Account.findByLogin(req.body.login);
 
@@ -85,12 +88,12 @@ module.exports = (app, provider) => {
             consent: {},
           };
 
-          await provider.interactionFinished(req, res, result)
+          await provider.interactionFinished(req, res, result);
         }).catch((err) => {
           throw err;
         });
     } catch (err) {
-      next(err)
+      next(err);
     }
   });
 };

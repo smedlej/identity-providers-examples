@@ -1,13 +1,14 @@
+/* eslint brace-style: [2, "1tbs", { "allowSingleLine": true }] */
 class UserDataCheck {
   checkMandatoryData(user) {
-    //console.log(user[0])
-    if(
+    let userInfo;
+    if (
       user[0].nomDeNaissance === ''
       || user[0].nomDeNaissance === undefined
       || user[0].nomDeNaissance === null
       || typeof user[0].nomDeNaissance !== 'string'
     ) {
-      return {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -27,15 +28,14 @@ class UserDataCheck {
         preferred_username: `${user[0].prenom}${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
-      }
-    }
-    else if(
+      };
+    } else if (
       user[0].prenom === ''
       || user[0].prenom === undefined
       || user[0].prenom === null
       || typeof user[0].prenom !== 'string'
     ) {
-      return {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -56,14 +56,13 @@ class UserDataCheck {
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
       };
-    }
-    else if (
+    } else if (
       user[0].birthdate === ''
       || user[0].birthdate === undefined
       || user[0].birthdate === null
       || typeof user[0].birthdate !== 'string'
     ) {
-      return {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -84,14 +83,13 @@ class UserDataCheck {
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
       };
-    }
-    else if(
+    } else if (
       user[0].departementDeNaissance === ''
       || user[0].departementDeNaissance === undefined
       || user[0].departementDeNaissance === null
       || typeof user[0].departementDeNaissance !== 'string'
     ) {
-      return {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -112,14 +110,13 @@ class UserDataCheck {
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
       };
-    }
-    else if(
+    } else if (
       user[0].Gender === ''
       || user[0].Gender === undefined
       || user[0].Gender === null
       || typeof user[0].Gender !== 'string'
-    ){
-      return {
+    ) {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -138,11 +135,10 @@ class UserDataCheck {
         phone_number: user[0].telephone,
         preferred_username: `${user[0].prenom}${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
-        siret: user[0].siret
+        siret: user[0].siret,
       };
-    }
-    else {
-      return {
+    } else {
+      userInfo = {
         address: {
           country: user[0].codePaysDeNaissance,
           formatted: user[0].adresseFormatee,
@@ -168,6 +164,8 @@ class UserDataCheck {
         siret: user[0].siret,
       };
     }
+
+    return userInfo;
   }
 }
 module.exports = UserDataCheck;
