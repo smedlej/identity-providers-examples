@@ -25,11 +25,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Set the provider findById method.
+providerConfiguration.findById = Account.findById;
+
 // Create new Provider
 const provider = new Provider(ISSUER, providerConfiguration);
 
-// Set the provider findById method.
-providerConfiguration.findById = Account.findById;
 /**
  * Get port from environment and store in Express.
  */
