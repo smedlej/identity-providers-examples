@@ -1,4 +1,4 @@
-import config from './config.json';
+import config from './configManager';
 
 module.exports.provider = {
   cookies: {
