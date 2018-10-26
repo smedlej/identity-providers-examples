@@ -15,7 +15,7 @@ module.exports = (app, provider) => {
     next();
   }
   
-  app.get('/', (req,res) => { res.sendStatus(200) } )
+  app.get('/.well-known/openid-configuration', (req,res) => { res.sendStatus(200) } )
 
   app.get('/interaction/:grant', setNoCache, async (req, res, next) => {
     const error = { message: '' };
