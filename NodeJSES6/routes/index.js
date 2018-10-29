@@ -14,7 +14,7 @@ module.exports = (app, provider) => {
     res.set('Cache-Control', 'no-cache, no-store');
     next();
   }
-
+  app.get('/', (req, res) => { res.SendStatusCode(200) })
   app.get('/interaction/:grant', setNoCache, async (req, res, next) => {
     const error = { message: '' };
 
