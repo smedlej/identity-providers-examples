@@ -1,35 +1,25 @@
 import config from './configManager';
 
 module.exports.provider = {
+  scopes: [
+    'birth',
+  ],
   cookies: {
     long: { signed: true, maxAge: (1 * 24 * 60 * 60) * 1000 }, // 1 day in ms
     short: { signed: true },
     keys: ['some secret key', 'and also the old rotated away some time ago', 'and one more'],
   },
   claims: {
-    family_name: ['family_name'],
-    given_name: ['given_name'],
-    nickname: ['nickname'],
-    gender: ['gender'],
-    preferred_username: ['preferred_username'],
     address: ['address'],
     email: ['email'],
-    birthdate: ['birthdate'],
-    birthplace: ['birthplace'],
-    birthcountry: ['birthcountry'],
-    birthdepartment: ['birthdepartment'],
+    birth: ['birthdate', 'birthplace', 'birthcountry', 'birthregion'],
     profile: [
       'name',
       'family_name',
       'given_name',
-      'nickname',
       'gender',
       'preferred_username',
       'email',
-      'birthdate',
-      'birthplace',
-      'birthcountry',
-      'birthdepartment',
     ],
   },
   grant_types_supported: ['authorization_code'],

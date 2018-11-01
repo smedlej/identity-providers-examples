@@ -8,6 +8,7 @@ const body = urlencoded({ extended: false });
 
 module.exports = (app, provider) => {
   const { constructor: { errors: { SessionNotFound } } } = provider;
+  console.log(provider.AccessToken);
 
   function setNoCache(req, res, next) {
     res.set('Pragma', 'no-cache');
@@ -59,7 +60,7 @@ module.exports = (app, provider) => {
   app.post('/interaction/:grant/login', setNoCache, async (req, res, next) => {
     const details = await provider.interactionDetails(req);
     const client = await provider.Client.find(details.params.client_id);
-
+    console.log(provider)
     try {
       Account
         .authenticate(req.body.login, req.body.password)
@@ -77,7 +78,6 @@ module.exports = (app, provider) => {
             });
           }
           const account = await Account.findByLogin(req.body.login);
-
           const result = {
             login: {
               account: account.accountId,
@@ -86,6 +86,7 @@ module.exports = (app, provider) => {
               remember: !!req.body.remember,
               ts: Math.floor(Date.now() / 1000),
             },
+
             consent: {},
           };
 
