@@ -1,6 +1,7 @@
 import config from './configManager';
 
 module.exports.provider = {
+  scopes: ['birth'],
   cookies: {
     long: { signed: true, maxAge: (1 * 24 * 60 * 60) * 1000 }, // 1 day in ms
     short: { signed: true },
@@ -14,10 +15,7 @@ module.exports.provider = {
     preferred_username: ['preferred_username'],
     address: ['address'],
     email: ['email'],
-    birthdate: ['birthdate'],
-    birthplace: ['birthplace'],
-    birthcountry: ['birthcountry'],
-    birthdepartment: ['birthdepartment'],
+    birth: ['birthdate', 'birthregion', 'birthcountry', 'birthdepartement'],
     profile: [
       'name',
       'family_name',
@@ -26,10 +24,6 @@ module.exports.provider = {
       'gender',
       'preferred_username',
       'email',
-      'birthdate',
-      'birthplace',
-      'birthcountry',
-      'birthdepartment',
     ],
   },
   grant_types_supported: ['authorization_code'],
