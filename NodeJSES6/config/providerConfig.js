@@ -15,7 +15,7 @@ module.exports.provider = {
     preferred_username: ['preferred_username'],
     address: ['address'],
     email: ['email'],
-    birth: ['birthdate', 'birthregion', 'birthcountry', 'birthdepartement'],
+    birth: ['birthdate', 'birthregion', 'birthcountry', 'birthplace'],
     profile: [
       'name',
       'family_name',
