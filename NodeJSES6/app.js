@@ -47,11 +47,12 @@ let server;
   app.use(provider.callback);
 
   server = app.listen(PORT, () => {
-    // eslint-disable no-console
+    /* eslint-disable no-console */
     console.info(`\x1b[32mServer listening on http://localhost:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
   });
 })().catch((err) => {
   if (server && server.listening) server.close();
+  /* eslint-disable no-console */
   console.error(err);
   process.exitCode = 1;
 });

@@ -63,7 +63,7 @@ class Account {
   }
 
   static async authenticate(login, password) {
-    let output;
+    let output = null;
     assert(login, 'identifiant must be provided');
     assert(password, 'password must be provided');
     await database.connection.find({
@@ -77,8 +77,9 @@ class Account {
       } else {
         output = null;
       }
+    /* eslint-disable arrow-body-style */
     }).catch((err) => {
-      throw err;
+      return err;
     });
     return output;
   }

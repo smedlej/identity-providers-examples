@@ -1,4 +1,5 @@
 /* eslint brace-style: [2, "1tbs", { "allowSingleLine": true }] */
+/* eslint-disable class-methods-use-this */
 class UserDataCheck {
   checkMandatoryData(user) {
     let userInfo;
@@ -22,10 +23,9 @@ class UserDataCheck {
         gender: user[0].Gender,
         given_name: user[0].prenom,
         middle_name: user[0].secondPrenom,
-        name: `${user[0].nomDeNaissance} ${user[0].prenom}`,
         nickname: user[0].prenom,
         phone_number: user[0].telephone,
-        preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
+        preferred_username: user[0].prenom,
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
       };
@@ -49,10 +49,7 @@ class UserDataCheck {
         family_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
         middle_name: user[0].secondPrenom,
-        name: `${user[0].nomDeNaissance} ${user[0].prenom}`,
-        nickname: user[0].prenom,
         phone_number: user[0].telephone,
-        preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siret: user[0].siret,
       };

@@ -1,12 +1,12 @@
 import querystring from 'querystring';
-
 import { urlencoded } from 'express'; // eslint-disable-line import/no-unresolved
-
 import Account from '../data/account';
 
+/* eslint-disable-next-line no-unused-vars */
 const body = urlencoded({ extended: false });
 
 module.exports = (app, provider) => {
+  /* eslint-disable-next-line no-unused-vars */
   const { constructor: { errors: { SessionNotFound } } } = provider;
 
   function setNoCache(req, res, next) {
@@ -14,7 +14,7 @@ module.exports = (app, provider) => {
     res.set('Cache-Control', 'no-cache, no-store');
     next();
   }
-  app.get('/', (req, res) => { res.SendStatusCode(200) })
+  app.get('/', (req, res) => { res.sendStatus(200); });
 
   app.get('/interaction/:grant', setNoCache, async (req, res, next) => {
     const error = { message: '' };
@@ -43,7 +43,9 @@ module.exports = (app, provider) => {
         details,
         title: 'Authorize',
         params: querystring.stringify(details.params, ',<br/>', ' = ', {
+          /* eslint-disable-next-line no-unused-expressions */
           encodeURIComponent: (value) => {
+            /* eslint-disable-next-line no-unused-expressions */
             value;
           },
         }),
@@ -55,7 +57,7 @@ module.exports = (app, provider) => {
       return next(err);
     }
   });
-
+  /* eslint-disable consistent-return */
   app.post('/interaction/:grant/login', setNoCache, async (req, res, next) => {
     const details = await provider.interactionDetails(req);
     const client = await provider.Client.find(details.params.client_id);
@@ -90,11 +92,9 @@ module.exports = (app, provider) => {
           };
 
           await provider.interactionFinished(req, res, result);
-        }).catch((err) => {
-          throw err;
-        });
+        }).catch(err => next(err));
     } catch (err) {
-      next(err);
+      return next(err);
     }
   });
 };
