@@ -89,7 +89,6 @@ function buildAndSetPivotIdentity(res, user, pivotIdentityMembers) {
     }
 
     if (configManager.isModeAgents() || pivotIdentity.given_name) {
-        console.log(pivotIdentity);
         res.json(pivotIdentity);
     } else {
         res.status(400).send();
