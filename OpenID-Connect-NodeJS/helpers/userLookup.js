@@ -40,6 +40,9 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
         if (configManager.isModeAgents()) {
             pivotIdentityMembers.siren = true;
             pivotIdentityMembers.email = true;
+            pivotIdentityMembers.usual_name = true,
+            pivotIdentityMembers.organizational_unit = true,
+            pivotIdentityMembers.identity_provider = true
         }
 
         if (req.check.scopes.indexOf('email') !== -1) {
@@ -86,6 +89,7 @@ function buildAndSetPivotIdentity(res, user, pivotIdentityMembers) {
     }
 
     if (configManager.isModeAgents() || pivotIdentity.given_name) {
+        console.log(pivotIdentity);
         res.json(pivotIdentity);
     } else {
         res.status(400).send();
