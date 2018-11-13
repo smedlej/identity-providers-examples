@@ -1,6 +1,7 @@
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
     <title>Création de jeu de données utilisateur en environnement d'intégration</title>
 </head>
@@ -10,35 +11,55 @@
         <div class="panel panel-default">
             <div class="panel-heading" style="padding-top: 15px; padding-bottom: 15px;">
                 <img class="logo-fc" src="/images/fc_logo_alt2_v2.png">
-                <h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur <br/>en environnement d'intégration</h1>
-              </div>
-              <% if (locals.session && locals.session.success) { %>
+                <h1 class="panel-title text-center" style="line-height: 1.5;">Création de jeu de données utilisateur
+                    <br/>en environnement d'intégration</h1>
+            </div>
+            <% if (locals.session && locals.session.success) { %>
                 <div class="alert alert-success">
-                  <strong><%= session.success %></strong>
+                    <strong><%= session.success %></strong>
                 </div>
-                <% } else if (locals.session && locals.session.error) { %>
-                  <div class="alert alert-warning" role="alert">
+            <% } else if (locals.session && locals.session.error) { %>
+                <div class="alert alert-warning" role="alert">
                     <strong><%= session.error %></strong>
-                  </div>
-                  <% } %>
+                </div>
+            <% } %>
             <div class="panel-body" style="padding: 25px;">
-                <div class="alert alert-warning text-center" style="margin-bottom: 25px;"><strong>Tous les champs sont obligatoires (sauf précisé).</strong> Les comptes seront disponibles dans les 2 bouchons de fournisseurs d'identités Impots.gouv et Ameli.</div>
+                <div class="alert alert-info">
+                    <strong>En vue d'une purge de notre base de données prévue le 30 mars 2019, merci de ne plus utiliser cette page pour créer de nouveaux comptes test.</strong>
+                    <p>
+                        Les comptes crées pour test sont disponibles ici :
+                        <a href="https://github.com/france-connect/identity-providers-examples/blob/master/NodeJSES6/data/database.csv" alt="Liens vers les comptes de test">
+                            https://github.com/france-connect/identity-providers-examples/blob/master/NodeJSES6/data/database.csv
+                        </a>.
+                    </p>
+                    <p>
+                        Si une création précise de compte test est nécessaire pour votre qualification, vous pouvez en faire la demande directement sur le fichier en l'éditant.
+                    </p>
+                </div>
+                <div class="alert alert-warning text-center" style="margin-bottom: 25px;">
+                    <strong>Tous les champs sont obligatoires (sauf précisé).</strong>
+                    Les comptes seront disponibles dans les 2 bouchons de fournisseurs d'identités Impots.gouv et Ameli.
+                </div>
                 <form data-persist="garlic" data-destroy="false" method="POST">
                     <div class="form-group">
                         <label for="identifier">Identifiant qui sera utilisé pour l'authentification :</label>
-                        <input class="form-control" type="text" placeholder="exemple : 46413193479" id="identifier" name="identifier" required="true" />
+                        <input class="form-control" type="text" placeholder="exemple : 46413193479" id="identifier"
+                               name="identifier" required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="given_name">Prénoms :</label>
-                        <input class="form-control" type="text" placeholder="exemple : Jean-Pierre Eric" id="given_name" name="given_name" required="true"/>
+                        <input class="form-control" type="text" placeholder="exemple : Jean-Pierre Eric" id="given_name"
+                               name="given_name" required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="family_name">Nom de famille :</label>
-                        <input class="form-control" type="text" placeholder="exemple : De Larue" id="family_name" name="family_name" required="true"/>
+                        <input class="form-control" type="text" placeholder="exemple : De Larue" id="family_name"
+                               name="family_name" required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="birthdate">Date de naissance YYYY-MM-DD :</label>
-                        <input class="form-control" type="text" placeholder="exemple : 1976-01-22" id="birthdate" name="birthdate" required="true"/>
+                        <input class="form-control" type="text" placeholder="exemple : 1976-01-22" id="birthdate"
+                               name="birthdate" required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="gender">Sexe : </label>
@@ -49,36 +70,44 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Adresse électronique :</label>
-                        <input class="form-control" type="email" placeholder="" id="email" name="email" required="true"/>
+                        <input class="form-control" type="email" placeholder="" id="email" name="email"
+                               required="true"/>
                     </div>
                     <div class="form-group">
                         <label for="preferred_username">Nom d'usage (facultatif):</label>
-                        <input class="form-control" type="text" placeholder="exemple: Dupont" id="preferred_username" name="preferred_username"/>
+                        <input class="form-control" type="text" placeholder="exemple: Dupont" id="preferred_username"
+                               name="preferred_username"/>
                     </div>
                     <div class="form-group">
                         <label for="address">Adresse postale (facultatif):</label>
-                        <input class="form-control" type="text" placeholder="exemple: 1 Place de la République" id="address" name="address"/>
+                        <input class="form-control" type="text" placeholder="exemple: 1 Place de la République"
+                               id="address" name="address"/>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Numéro de téléphone (facultatif):</label>
-                        <input class="form-control" type="number" placeholder="exemple: 0101010101" id="phone_number" name="phone_number"/>
+                        <input class="form-control" type="number" placeholder="exemple: 0101010101" id="phone_number"
+                               name="phone_number"/>
                     </div>
                     <div class="form-group">
                         <label for="birthcountry">Code COG du pays de naissance :</label>
-                        <input class="form-control" type="text" placeholder="exemple : 99100 pour la France" id="birthcountry" name="birthcountry" required="true"/>
+                        <input class="form-control" type="text" placeholder="exemple : 99100 pour la France"
+                               id="birthcountry" name="birthcountry" required="true"/>
                     </div>
                     <div class="form-group">
-                        <label for="birthplace">Code COG du lieu de naissance - à renseigner si le COG pays est la France (99100)</label>
-                        <input class="form-control" type="text" placeholder="exemple : 31555 pour Toulouse" id="birthplace" name="birthplace"/>
+                        <label for="birthplace">Code COG du lieu de naissance - à renseigner si le COG pays est la
+                            France (99100)</label>
+                        <input class="form-control" type="text" placeholder="exemple : 31555 pour Toulouse"
+                               id="birthplace" name="birthplace"/>
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe :</label>
-                        <input class="form-control" type="password" placeholder="" id="password" name="password" required="true"/>
+                        <input class="form-control" type="password" placeholder="" id="password" name="password"
+                               required="true"/>
                     </div>
 
-                    <hr />
+                    <hr/>
 
-                    <br /><br /><br />
+                    <br/><br/><br/>
 
                     <div class="g-recaptcha" data-sitekey="6LfxVxwTAAAAAJ0F1mUqmpMMsB6N1nlR41OCIJ-C"></div>
                     <input class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;" type="submit"/>
@@ -87,15 +116,18 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script type="text/javascript" src="/js/garlic.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
 </script>
 
 </body>
