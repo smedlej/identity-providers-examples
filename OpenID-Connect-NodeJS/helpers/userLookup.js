@@ -40,7 +40,8 @@ UserLookup.prototype.buildAndSendUserInfo = function (req, res, decryptedIdToken
         if (configManager.isModeAgents()) {
             pivotIdentityMembers.siren = true;
             pivotIdentityMembers.email = true;
-            pivotIdentityMembers.uid = true
+            pivotIdentityMembers.uid = true;
+            
         }
 
         if (req.check.scopes.indexOf('email') !== -1) {
