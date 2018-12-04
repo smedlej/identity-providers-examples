@@ -27,7 +27,7 @@ module.exports = (app, provider) => {
         return res.render('index', {
           client,
           details,
-          title: 'Démonstrateur de fournisseur d\'Identité',
+          title: 'Démonstrateur de Fournisseur d\'Identité',
           error,
           params: querystring.stringify(details.params, ',<br/>', ' = ', {
             encodeURIComponent: value => value,
