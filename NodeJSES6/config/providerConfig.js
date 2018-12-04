@@ -15,7 +15,10 @@ module.exports.provider = {
     preferred_username: ['preferred_username'],
     address: ['address'],
     email: ['email'],
-    birth: ['birthdate', 'birthregion', 'birthcountry', 'birthplace'],
+    siren: ['siren'],
+    organizational_unit: ['organizational_unit'],
+    identity_provider: ['identity_provider'],
+    birth: ['birthcountry', 'birthplace'],
     profile: [
       'name',
       'family_name',
@@ -24,6 +27,10 @@ module.exports.provider = {
       'gender',
       'preferred_username',
       'email',
+      'siren',
+      'birthdate',
+      'organizational_unit',
+      'identity_provider'
     ],
   },
   grant_types_supported: ['authorization_code'],
