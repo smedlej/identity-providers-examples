@@ -56,9 +56,9 @@ module.exports.provider = {
     },
     async logoutSource(ctx, form)
     {
-      console.log(this.oidc.params)
-      if (this.oidc.params.post_logout_redirect_uri) {
-        this.body = `<!DOCTYPE html>
+      console.log(ctx.oidc.params)
+      if (ctx.oidc.params.post_logout_redirect_uri) {
+        ctx.body = `<!DOCTYPE html>
       <head>
         <title>Logout</title>
       </head>
@@ -78,7 +78,7 @@ module.exports.provider = {
       </body>
       </html>`;
       } else {
-        this.body = `<!DOCTYPE html>
+        ctx.body = `<!DOCTYPE html>
       <head>
         <title>Logout</title>
       </head>
