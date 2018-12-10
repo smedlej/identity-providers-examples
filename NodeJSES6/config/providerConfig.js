@@ -57,7 +57,7 @@ module.exports.provider = {
     async logoutSource(ctx, form)
     {
       console.log(ctx.oidc.params)
-      if (ctx.oidc.params.post_logout_redirect_uri) {
+      if (ctx.oidc.params.id_token_hint) {
         ctx.body = `<!DOCTYPE html>
       <head>
         <title>Logout</title>
