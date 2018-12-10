@@ -56,9 +56,7 @@ module.exports.provider = {
     },
     async logoutSource(ctx, form)
     {
-      console.log(ctx.oidc.params)
-      if (ctx.oidc.params.id_token_hint) {
-        ctx.body = `<!DOCTYPE html>
+      ctx.body = `<!DOCTYPE html>
       <head>
         <title>Logout</title>
       </head>
@@ -77,19 +75,6 @@ module.exports.provider = {
         </script>
       </body>
       </html>`;
-      } else {
-        ctx.body = `<!DOCTYPE html>
-      <head>
-        <title>Logout</title>
-      </head>
-      <body>
-        ${form}
-        Do you want to logout from the OP?
-        <button type="submit" form="op.logoutForm" name="logout" value="yes">Yes</button>
-        <button type="submit" form="op.logoutForm">Please don't!</button>
-      </body>
-      </html>`;
-      }
 },
   clientCacheDuration: 1 * 24 * 60 * 60, // 1 day in seconds,
   ttl: {
