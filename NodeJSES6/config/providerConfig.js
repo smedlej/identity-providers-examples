@@ -13,9 +13,9 @@ module.exports.provider = {
   },
   features: {
     devInteractions: false,
-    sessionManagement: true,
     discovery: true,
-    claimsParameter: true,
+    sessionManagement: true,
+    backchannelLogout: true
   },
   routes: {
     authorization: '/authorize',
@@ -33,35 +33,40 @@ module.exports.provider = {
     return `/interaction/${ctx.oidc.uuid}`;
   },
   async logoutSource(ctx, form) {
-    ctx.body = `<!DOCTYPE html>
-      <head>
-        <link rel='stylesheet' href='/stylesheets/bulma.min.css' />
-        <title>Logout</title>
-      </head>
-      <body>
-        <div class="container has-text-centered">
-          ${form}
-          <h2 class="title">
-            Do you want to logout ?
-          </h2>
-          <button class="button is-success" onclick="logout()">Yes</button>
-          <button class="button is-danger" onclick="document.forms[0].submit()">Please, don't!</button>
-        </div>
-        
-        <script>
-          function logout() {
-            var form = document.forms[0];
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.class = 'input'
-            input.name = 'logout';
-            input.value = 'yes';
-            form.appendChild(input);
-            form.submit();
-          }
-      </script>
-     </body>
-     </html>`;
+    console.log(this.oidc.params)
+    if (this.oidc.params.post_logout_redirect_uri) {
+      this.body = `<!DOCTYPE html>
+  <head>
+    <title>Logout</title>
+  </head>
+  <body>
+    ${form}
+    <script>
+      var form = document.forms[0];
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'logout';
+      input.value = 'yes';
+
+      form.appendChild(input);
+
+      form.submit();
+    </script>
+  </body>
+  </html>`;
+    } else {
+      this.body = `<!DOCTYPE html>
+  <head>
+    <title>Logout</title>
+  </head>
+  <body>
+    ${form}
+    Do you want to logout from the OP?
+    <button type="submit" form="op.logoutForm" name="logout" value="yes">Yes</button>
+    <button type="submit" form="op.logoutForm">Please don't!</button>
+  </body>
+  </html>`;
+    }
   },
   clientCacheDuration: 1 * 24 * 60 * 60, // 1 day in seconds,
   ttl: {
