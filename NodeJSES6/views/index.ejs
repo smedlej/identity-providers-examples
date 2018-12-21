@@ -11,7 +11,7 @@
     <div class="columns is-centered">
       <div class="column">
         <div class="notification has-text-centered">
-          <form autocomplete="off" action="/interaction/<%= details.uuid %>/login" method="post">
+          <form action="/interaction/<%= details.uuid %>/login" method="post">
             <div class="field">
               <input type="hidden" name="uuid" value="<%= details.uuid %>"/>
               <div class="control">

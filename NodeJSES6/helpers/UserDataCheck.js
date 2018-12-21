@@ -27,6 +27,11 @@ class UserDataCheck {
         preferred_username: user[0].prenom,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     } else if (
       user[0].prenom === ''
@@ -44,12 +49,17 @@ class UserDataCheck {
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
-        family_name: user[0].nomDeNaissance,
+        usual_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
         middle_name: user[0].secondPrenom,
         phone_number: user[0].telephone,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     } else if (
       user[0].birthdate === ''
@@ -66,7 +76,7 @@ class UserDataCheck {
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
-        family_name: user[0].nomDeNaissance,
+        usual_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
         given_name: user[0].prenom,
         middle_name: user[0].secondPrenom,
@@ -76,6 +86,11 @@ class UserDataCheck {
         preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     } else if (
       user[0].codeCommune === ''
@@ -92,7 +107,7 @@ class UserDataCheck {
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         email: user[0].email,
-        family_name: user[0].nomDeNaissance,
+        usual_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
         given_name: user[0].prenom,
         middle_name: user[0].secondPrenom,
@@ -102,6 +117,11 @@ class UserDataCheck {
         preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     } else if (
       user[0].Gender === ''
@@ -119,7 +139,7 @@ class UserDataCheck {
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
-        family_name: user[0].nomDeNaissance,
+        usual_name: user[0].nomDeNaissance,
         given_name: user[0].prenom,
         middle_name: user[0].secondPrenom,
         name: `${user[0].nomDeNaissance} ${user[0].prenom}`,
@@ -128,6 +148,11 @@ class UserDataCheck {
         preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     } else {
       userInfo = {
@@ -143,7 +168,7 @@ class UserDataCheck {
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
-        family_name: user[0].nomDeNaissance,
+        usual_name: user[0].nomDeNaissance,
         gender: user[0].Gender,
         given_name: user[0].prenom,
         middle_name: user[0].secondPrenom,
@@ -153,6 +178,11 @@ class UserDataCheck {
         preferred_username: `${user[0].prenom}_${user[0].nomDeNaissance}`,
         updated_at: user[0].updatedAt,
         siren: user[0].siren,
+        siret: user[0].siret,
+        organizational_unit: user[0].serviceAffectation,
+        belonging_population: user[0].populationAppartenance,
+        position: user[0].position,
+        job: user[0].job,
       };
     }
 

@@ -66,6 +66,7 @@ module.exports = (app, provider) => {
       Account
         .authenticate(req.body.login, req.body.password)
         .then(async (data) => {
+          console.log('data ================================', data);
           if (data === null) {
             const error = { message: 'Invalid credentiales' };
             res.render('index', {
