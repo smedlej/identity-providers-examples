@@ -9,7 +9,7 @@ import Account from './data/account';
 
 const { provider: providerConfiguration, clients } = require('./config/providerConfig');
 
-const { PORT = 4000, ISSUER = `http://localhost:${PORT}` } = process.env;
+const { PORT = 4000, ISSUER = `http://fia1.int-cw.dev-franceconnect.fr:${PORT}` } = process.env;
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -48,7 +48,7 @@ let server;
 
   server = app.listen(PORT, () => {
     /* eslint-disable no-console */
-    console.info(`\x1b[32mServer listening on http://localhost:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
+    console.info(`\x1b[32mServer listening on http://fia1.int-cw.dev-franceconnect.fr:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
   });
 })().catch((err) => {
   if (server && server.listening) server.close();
