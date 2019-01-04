@@ -3,8 +3,11 @@ html,body {
   font-size: 14px;
   font-weight: 300;
 }
-.hero.is-success {
-  background: #F2F6FA;
+.content.bottom {
+  padding: 0 25px 15px;
+}
+.hero.is-fullheight {
+  background: #ededed url(../images/logo_marianne.png) no-repeat right 5% bottom fixed;
 }
 .hero .nav, .hero.is-success .nav {
   -webkit-box-shadow: none;
@@ -17,15 +20,11 @@ html,body {
   background-color: #0354aa;
   color: #ffffff;
 }
-.button:hover{
+.button:hover,
+.button:active {
   background-color: #034EA2;
+  color: #ffffff;
 }
 input {
   font-weight: 300;
-}
-p {
-  font-weight: 700;
-}
-p.subtitle {
-  padding-top: 1rem;
 }

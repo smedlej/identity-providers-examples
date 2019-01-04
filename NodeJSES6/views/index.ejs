@@ -8,49 +8,50 @@
   <link rel='stylesheet' href='/stylesheets/main.css' />
 </head>
 <body>
-  <section class="hero is-success is-fullheight">
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <div class="column is-half is-offset-3">
-            <h1 class="title has-text-grey">Connexion</h1>
-            <p class="subtitle has-text-grey">Exemple de connexion à un fournisseur d'identité</p>
-          <div class="box">
-            <form autocomplete="off" action="/interaction/<%= details.uuid %>/login" method="post">
-              <input type="hidden" name="uuid" value="<%= details.uuid %>"/>
-              <div class="field">
-                <div class="control">
-                  <% if (error.message !== '') {%> <label for="login" class="has-text-danger"> Identifiant incrorrect </label> <% } %>
-                  <input 
-                    id="login"
-                    type="text"
-                    name="login"
-                    class="input is-large <%= (error.message !== '') ? 'help is-danger' : '' %>" 
-                    placeholder="Veuillez renseigner votre identifiant"
-                    <% if (!details.params.login_hint) { %> autofocus="on" <% } else { %> value="<%= details.params.login_hint %>" <% } %>
-                    required
-                  >
-                </div>
+  <section class="hero is-fullheight">
+    <div class="container has-text-centered">
+      <div class="column is-half is-offset-3">
+          <h1 class="title has-text-grey">
+            Bienvenue sur le FI de démonstration<br>
+            FranceConnect Agents
+          </h1>
+        <div class="box">
+          <form autocomplete="off" action="/interaction/<%= details.uuid %>/login" method="post">
+            <input type="hidden" name="uuid" value="<%= details.uuid %>"/>
+            <div class="field">
+              <div class="control">
+                <% if (error.message !== '') {%> <label for="login" class="has-text-danger"> Identifiant incrorrect </label> <% } %>
+                <input 
+                  id="login"
+                  type="text"
+                  name="login"
+                  class="input is-large <%= (error.message !== '') ? 'help is-danger' : '' %>" 
+                  placeholder="Veuillez renseigner votre identifiant"
+                  <% if (!details.params.login_hint) { %> autofocus="on" <% } else { %> value="<%= details.params.login_hint %>" <% } %>
+                  required
+                >
               </div>
-              <div class="field">
-                <div class="control">
-                    <% if (error.message !== '') {%> <label for="password" class="has-text-danger"> Mot de passe incrorrect </label><% } %>
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    class="input is-large <%= (error.message !== '') ? 'help is-danger' : '' %>"
-                    placeholder="Veuillez renseigner votre mot de passe"
-                    <% if (details.params.login_hint) { %> autofocus="on" <% } %>
-                    required
-                  >
-                </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                  <% if (error.message !== '') {%> <label for="password" class="has-text-danger"> Mot de passe incrorrect </label><% } %>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  class="input is-large <%= (error.message !== '') ? 'help is-danger' : '' %>"
+                  placeholder="Veuillez renseigner votre mot de passe"
+                  <% if (details.params.login_hint) { %> autofocus="on" <% } %>
+                  required
+                >
               </div>
-              <button class="button is-block is-large is-fullwidth">Se connecter</button>
-            </form>
-          </div>
+            </div>
+            <button class="button is-block is-large is-fullwidth">Valider</button>
+          </form>
         </div>
       </div>
     </div>
+    <div class="content has-text-right bottom">FranceConnect Agents - Application de démonstration</div>
   </section>
   <script async src="/js/main.js"></script>
 </body>
