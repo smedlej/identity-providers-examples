@@ -7,11 +7,10 @@ html,body {
   padding: 0 25px 15px;
 }
 .hero.is-fullheight {
-  background: #ededed url(../images/logo_marianne.png) no-repeat right 5% bottom fixed;
+  background: #ededed url(../images/logo_marianne.png) no-repeat right 5% bottom 45px fixed;
 }
-.hero .nav, .hero.is-success .nav {
-  -webkit-box-shadow: none;
-  box-shadow: none;
+.hero.is-fullheight .container {
+  margin-top: 110px;
 }
 .box {
   margin-top: 2rem;
@@ -21,7 +20,8 @@ html,body {
   color: #ffffff;
 }
 .button:hover,
-.button:active {
+.button:active,
+.button:focus  {
   background-color: #034EA2;
   color: #ffffff;
 }
