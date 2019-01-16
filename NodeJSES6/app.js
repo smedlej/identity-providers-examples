@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import https from 'https';
 
 import helmet from 'helmet';
 import Provider from 'oidc-provider';
@@ -9,7 +10,7 @@ import Account from './data/account';
 
 const { provider: providerConfiguration, clients } = require('./config/providerConfig');
 
-const { PORT = 4000, ISSUER = `http://localhost:${PORT}` } = process.env;
+const { PORT = 4000, ISSUER = `https://fia1.int-cw.dev-franceconnect.fr` } = process.env;
 const indexRouter = require('./routes/index');
 
 const app = express();
@@ -43,12 +44,14 @@ let server;
     clients,
   });
 
+  provider.proxy = true;
+
   indexRouter(app, provider);
   app.use(provider.callback);
 
   server = app.listen(PORT, () => {
     /* eslint-disable no-console */
-    console.info(`\x1b[32mServer listening on http://localhost:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
+    console.info(`\x1b[32mServer listening on https://fia1.int-cw.dev-franceconnect.fr:${PORT}, check it's /.well-known/openid-configuration \x1b[0m`);
   });
 })().catch((err) => {
   if (server && server.listening) server.close();
