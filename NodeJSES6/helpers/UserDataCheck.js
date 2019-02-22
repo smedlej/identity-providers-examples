@@ -10,11 +10,7 @@ class UserDataCheck {
       || typeof user[0].nomDeNaissance !== 'string'
     ) {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -40,11 +36,7 @@ class UserDataCheck {
       || typeof user[0].prenom !== 'string'
     ) {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -69,11 +61,7 @@ class UserDataCheck {
       || typeof user[0].birthdate !== 'string'
     ) {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
@@ -101,11 +89,7 @@ class UserDataCheck {
       || typeof user[0].codeCommune !== 'string'
     ) {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         email: user[0].email,
@@ -133,11 +117,7 @@ class UserDataCheck {
       || typeof user[0].Gender !== 'string'
     ) {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -160,14 +140,7 @@ class UserDataCheck {
       };
     } else {
       userInfo = {
-        address: {
-          country: user[0].codePaysDeNaissance,
-          formatted: user[0].adresseFormatee,
-          locality: '000',
-          postal_code: '000',
-          region: '000',
-          street_address: user[0].adresseFormatee,
-        },
+        address: user[0].adresseFormatee,
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
