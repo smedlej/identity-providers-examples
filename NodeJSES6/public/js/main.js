@@ -1,4 +1,5 @@
 (function () {
+    document.getElementById("year").innerHTML = new Date().getFullYear();
     var elements = document.getElementsByTagName("input");
     for (var i = 0; i < elements.length; i++) {
         elements[i].oninvalid = function(e) {
