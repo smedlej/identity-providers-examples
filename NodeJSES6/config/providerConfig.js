@@ -41,7 +41,8 @@ module.exports.provider = {
         'phone',
         'position',
         'siret',
-        'belonging_population'
+        'belonging_population',
+        'uid'
       ],
     },
     grant_types_supported: ['authorization_code'],
