@@ -10,7 +10,11 @@ class UserDataCheck {
       || typeof user[0].nomDeNaissance !== 'string'
     ) {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          street_address: user[0].adresseFormatee,
+        },
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -28,6 +32,7 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     } else if (
       user[0].prenom === ''
@@ -36,7 +41,11 @@ class UserDataCheck {
       || typeof user[0].prenom !== 'string'
     ) {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          street_address: user[0].adresseFormatee,
+        },
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -53,6 +62,7 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     } else if (
       user[0].birthdate === ''
@@ -61,7 +71,11 @@ class UserDataCheck {
       || typeof user[0].birthdate !== 'string'
     ) {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          street_address: user[0].adresseFormatee,
+        },
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
         email: user[0].email,
@@ -81,6 +95,7 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     } else if (
       user[0].codeCommune === ''
@@ -89,7 +104,11 @@ class UserDataCheck {
       || typeof user[0].codeCommune !== 'string'
     ) {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          street_address: user[0].adresseFormatee,
+        },
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         email: user[0].email,
@@ -109,6 +128,7 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     } else if (
       user[0].Gender === ''
@@ -117,7 +137,11 @@ class UserDataCheck {
       || typeof user[0].Gender !== 'string'
     ) {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          street_address: user[0].adresseFormatee,
+        },
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -137,10 +161,18 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     } else {
       userInfo = {
-        address: user[0].adresseFormatee,
+        address: {
+          country: user[0].codePaysDeNaissance,
+          formatted: user[0].adresseFormatee,
+          locality: '000',
+          postal_code: '000',
+          region: '000',
+          street_address: user[0].adresseFormatee,
+        },
         birthdate: user[0].birthdate,
         birthcountry: user[0].codePaysDeNaissance,
         birthplace: user[0].codeCommune,
@@ -161,6 +193,7 @@ class UserDataCheck {
         belonging_population: user[0].populationAppartenance,
         position: user[0].position,
         job: user[0].job,
+        uid: user[0].job
       };
     }
 
