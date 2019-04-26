@@ -130,6 +130,8 @@ app.get('/user/create', function (req, res) {
 
 app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'}), function (req, res) {
     delete req.session.error;
+    // Regex that match the following date pattern :
+    const dateRegex = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
 
     captchaHelper.getCpatchaValidationResponse(req, function (err, result) {
         if (err || !result.success) {
@@ -137,6 +139,10 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
             res.redirect(req.path);
         }
         else {
+            if (!dateRegex.test(req.body.birthdate)) {
+                req.session.error = 'La date de naissance doit avoir le format : YYYY-MM-DD';
+                return res.redirect(req.path);
+            }
             if (req.body.birthcountry === '99100' && !req.body.birthplace) {
                 req.session.error = 'Le lieu de naissance est obligatoire si le pays de naissance est la France (99100)';
                 return res.redirect(req.path);
@@ -183,7 +189,6 @@ app.post('/user/create', oidc.use({policies: {loggedIn: false}, models: 'user'})
                             req.session.user = user.id;
                             req.session.success = "Votre compte a bien été créé."
                             res.redirect('/user/create');
-
                         }
                     });
                 }
