@@ -27,7 +27,7 @@ module.exports = (app, provider) => {
         return res.render('index', {
           client,
           details,
-          title: 'Sign-in',
+          title: 'Démonstrateur de Fournisseur d\'Identité',
           error,
           params: querystring.stringify(details.params, ',<br/>', ' = ', {
             encodeURIComponent: value => value,
@@ -66,6 +66,7 @@ module.exports = (app, provider) => {
       Account
         .authenticate(req.body.login, req.body.password)
         .then(async (data) => {
+          console.log('data ================================', data);
           if (data === null) {
             const error = { message: 'Invalid credentiales' };
             res.render('index', {

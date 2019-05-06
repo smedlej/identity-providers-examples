@@ -1037,7 +1037,7 @@ OpenIDConnect.prototype.token = function () {
                                         sub: prev.sub || prev.user || null,
                                         aud: prev.client.key,
                                         exp: d + 60,
-                                        acr: 'eidas2',
+                                        acr: 'eidas1',
                                         iat: d,
                                         nonce: prev.auth.nonce
                                     };
