@@ -1,6 +1,8 @@
 identity-providers-examples
 ===========================
 
+## :warning: Deprecation warning :warning: this repository has been moved to https://github.com/france-connect/identity-provider-example
+
 Ce dépôt Github propose des exemples de fournisseurs d'identité compatibles avec France Connect.
 
 Il est maintenu par l'équipe des développeurs de France Connect. Contactez-nous à l'adresse franceconnect.projet@octo.com.
